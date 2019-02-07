@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "672318889057",
+    "firebase_url": "https://guidancesystem-f0136.firebaseio.com",
+    "project_id": "guidancesystem-f0136",
+    "storage_bucket": "guidancesystem-f0136.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:672318889057:android:4fb6ed798903fa6a",
+        "android_client_info": {
+          "package_name": "wit.org.guidancesystem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "672318889057-hj2bk9stvhpv4goql2olgn5o9dr6dkdv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "wit.org.guidancesystem",
+            "certificate_hash": "4705869db3e8eff564b5dc6c72676de2229fde36"
+          }
+        },
+        {
+          "client_id": "672318889057-t8b0qb8tl9vgl9ide3pgbcdql2j7h93l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSIihcpf3YQXiznq36khWp2LT1auaypKc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "672318889057-t8b0qb8tl9vgl9ide3pgbcdql2j7h93l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
