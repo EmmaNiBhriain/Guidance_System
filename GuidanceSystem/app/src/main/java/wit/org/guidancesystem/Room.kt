@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import kotlinx.android.synthetic.main.activity_room.*
 
-class Room : AppCompatActivity() {
+class Room : Base() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

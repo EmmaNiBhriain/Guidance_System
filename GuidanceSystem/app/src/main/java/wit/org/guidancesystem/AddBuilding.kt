@@ -13,7 +13,7 @@ import org.jetbrains.anko.*
 import wit.org.guidancesystem.main.MainApp
 import wit.org.guidancesystem.models.BuildingModel
 
-class AddBuilding : AppCompatActivity(), AnkoLogger {
+class AddBuilding : Base(){
 
     var building = BuildingModel()
     var rooms = arrayListOf<String>()

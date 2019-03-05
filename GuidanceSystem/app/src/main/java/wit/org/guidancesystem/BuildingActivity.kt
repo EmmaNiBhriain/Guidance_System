@@ -18,7 +18,7 @@ import org.jetbrains.anko.intentFor
 import wit.org.guidancesystem.main.MainApp
 import wit.org.guidancesystem.models.BuildingModel
 
-class BuildingActivity : AppCompatActivity(), BuildingListener {
+class BuildingActivity : Base(), BuildingListener {
 
     lateinit var app:MainApp
 
