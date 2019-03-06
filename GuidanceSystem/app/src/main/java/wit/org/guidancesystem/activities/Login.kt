@@ -30,8 +30,15 @@ class Login : AppCompatActivity(), AnkoLogger {
         else {
             auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    intent = Intent(this, AddBuilding::class.java)
-                    startActivity(intent)
+                    if(email=="obrienemma0@gmail.com"){
+                        intent = Intent(this, AdminHome::class.java)
+                        startActivity(intent)
+                    }
+                    else{
+                        intent = Intent(this, AddBuilding::class.java)
+                        startActivity(intent)
+                    }
+
                 } else {
                     toast("Sign Up Failed: ${task.exception?.message}")
                 }
