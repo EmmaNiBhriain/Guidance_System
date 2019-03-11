@@ -4,5 +4,5 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class Metre(var id:Int, var type:AreaType): Parcelable {
+data class Metre(var type:AreaType, var xCoOrd:Int, var yCoOrd:Int): Parcelable {
 }

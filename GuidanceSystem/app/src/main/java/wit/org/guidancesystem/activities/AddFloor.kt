@@ -20,6 +20,7 @@ import android.widget.Toast
 import android.widget.TextView
 import com.google.firebase.database.FirebaseDatabase
 import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
 import wit.org.guidancesystem.models.BuildingModel
 import kotlin.math.floor
 
@@ -56,7 +57,7 @@ class AddFloor : AppCompatActivity(){
                 val ref = FirebaseDatabase.getInstance().getReference("Buildings")
 
                 val buildingid = ref.push().key
-                val name = "Ground Floor"
+                val name = "First Floor"
                 val building= BuildingModel(buildingid!!, name, metres)
 
                 ref.child(buildingid).setValue(building).addOnCompleteListener{
@@ -71,9 +72,12 @@ class AddFloor : AppCompatActivity(){
     }
 
     private fun populateGrid(){
-        for (i in 1..100){
-            var new = Metre(i, AreaType.OTHER)
-            metres.add(new)
+        for (i in 10 downTo 1){
+            for(j in 1..10){
+                var new = Metre(AreaType.OTHER, j, i)
+                metres.add(new)
+            }
+
         }
     }
 
@@ -84,7 +88,7 @@ class AddFloor : AppCompatActivity(){
 
 
 
-    class FloorAdapter:BaseAdapter{
+    class FloorAdapter:BaseAdapter, AnkoLogger{
         var metreList = ArrayList<Metre>()
 
         var context: Context? = null
@@ -126,6 +130,10 @@ class AddFloor : AppCompatActivity(){
                 else{
                     metreSquare.setBackgroundResource(R.color.colorGrey)
                     metre.type = AreaType.OTHER
+                }
+
+                info {
+                    "!!!Coords: " + metre.xCoOrd.toString() + " " + metre.yCoOrd.toString()
                 }
 
             }
