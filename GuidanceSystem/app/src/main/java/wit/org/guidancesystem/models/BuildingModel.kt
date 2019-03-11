@@ -5,5 +5,5 @@ import kotlinx.android.parcel.Parcelize
 
 
 @Parcelize
-data class BuildingModel(var id:String = "", var name:String = "", var rooms:ArrayList<String> = arrayListOf()): Parcelable {
+data class BuildingModel(var id:String = "", var name:String = "", var rooms:ArrayList<Metre> = arrayListOf()): Parcelable {
 }

@@ -12,11 +12,12 @@ import org.jetbrains.anko.toast
 import org.jetbrains.anko.*
 import wit.org.guidancesystem.main.MainApp
 import wit.org.guidancesystem.models.BuildingModel
+import wit.org.guidancesystem.models.Metre
 
 class AddBuilding : Base(){
 
     var building = BuildingModel()
-    var rooms = arrayListOf<String>()
+    var rooms = arrayListOf<Metre>()
     lateinit var app:MainApp
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +39,7 @@ class AddBuilding : Base(){
             }
             else{
                 info{"Saving building"}
-                createBuildings(building.name, building.rooms)
+                    //createBuildings(building.name, building.rooms)
 
                 //rooms.addAll(listOf("room1","room2"))
             }
@@ -47,8 +48,8 @@ class AddBuilding : Base(){
 
     }
 
-    private fun createBuildings(name:String, rooms:ArrayList<String>){
-        building.rooms.addAll(listOf("room1","room2"))
+    private fun createBuildings(name:String, rooms:ArrayList<Metre>){
+        //building.rooms.addAll(listOf("room1","room2"))
         info{building.rooms.size}
         app.buildings.add(building)
 

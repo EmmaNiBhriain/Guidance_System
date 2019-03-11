@@ -2,11 +2,10 @@ package wit.org.guidancesystem.activities
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.AdapterView
 import android.widget.BaseAdapter
 import android.widget.Button
@@ -19,7 +18,9 @@ import wit.org.guidancesystem.models.Metre
 import java.text.FieldPosition
 import android.widget.Toast
 import android.widget.TextView
+import com.google.firebase.database.FirebaseDatabase
 import org.jetbrains.anko.AnkoLogger
+import wit.org.guidancesystem.models.BuildingModel
 import kotlin.math.floor
 
 
@@ -41,6 +42,32 @@ class AddFloor : AppCompatActivity(){
         floorLayout.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, i, l ->
             val item = (view.findViewById(R.id.metreSquare) as TextView).text.toString()
         };
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.add_floor_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when(item?.itemId){
+            R.id.item_confirm ->{
+                val ref = FirebaseDatabase.getInstance().getReference("Buildings")
+
+                val buildingid = ref.push().key
+                val name = "Ground Floor"
+                val building= BuildingModel(buildingid!!, name, metres)
+
+                ref.child(buildingid).setValue(building).addOnCompleteListener{
+                    Toast.makeText(applicationContext, "Building saved successfully", Toast.LENGTH_LONG).show()
+                }
+
+                intent = Intent(this, AdminHome::class.java)
+                startActivity(intent)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun populateGrid(){

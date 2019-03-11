@@ -11,4 +11,5 @@
     <string name="password">Password</string>
     <string name="email">Email</string>
     <string name="menu_logout">Logout</string>
+    <string name="ok">ok</string>
 </resources>
