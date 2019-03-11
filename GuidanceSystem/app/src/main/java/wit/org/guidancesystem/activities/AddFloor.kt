@@ -19,10 +19,11 @@ import wit.org.guidancesystem.models.Metre
 import java.text.FieldPosition
 import android.widget.Toast
 import android.widget.TextView
+import org.jetbrains.anko.AnkoLogger
 import kotlin.math.floor
 
 
-class AddFloor : AppCompatActivity() {
+class AddFloor : AppCompatActivity(){
 
     var metres = ArrayList<Metre>()
 
@@ -83,7 +84,15 @@ class AddFloor : AppCompatActivity() {
             var metreSquare = floorView.findViewById(R.id.metreSquare) as Button
 
             metreSquare.setOnClickListener {
-                metreSquare.setBackgroundResource(R.color.colorAccent)
+                if(metre.type == AreaType.OTHER){
+                    metreSquare.setBackgroundResource(R.color.colorAccent)
+                    metre.type = AreaType.CORRIDOR
+                }
+                else if(metre.type == AreaType.CORRIDOR){
+                    metreSquare.setBackgroundResource(R.color.colorPrimary)
+                    metre.type = AreaType.OTHER
+                }
+
             }
             return floorView
         }
