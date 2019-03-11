@@ -7,7 +7,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.BaseAdapter
+import android.widget.Button
 import kotlinx.android.synthetic.main.add_floor.*
 import kotlinx.android.synthetic.main.building_square.*
 import wit.org.guidancesystem.R
@@ -15,6 +17,10 @@ import wit.org.guidancesystem.R.color.colorAccent
 import wit.org.guidancesystem.models.AreaType
 import wit.org.guidancesystem.models.Metre
 import java.text.FieldPosition
+import android.widget.Toast
+import android.widget.TextView
+import kotlin.math.floor
+
 
 class AddFloor : AppCompatActivity() {
 
@@ -30,6 +36,10 @@ class AddFloor : AppCompatActivity() {
 
         adapter = FloorAdapter(this, metres)
         floorLayout.adapter = adapter
+
+        floorLayout.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, i, l ->
+            val item = (view.findViewById(R.id.metreSquare) as TextView).text.toString()
+        };
     }
 
     private fun populateGrid(){
@@ -67,8 +77,14 @@ class AddFloor : AppCompatActivity() {
             val metre = this.metreList[position]
 
             var inflator = context!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            var floorView = inflator.inflate(R.layout.building_square, null)
+            var floorView = inflator.inflate(R.layout.building_square, null);
 
+
+            var metreSquare = floorView.findViewById(R.id.metreSquare) as Button
+
+            metreSquare.setOnClickListener {
+                metreSquare.setBackgroundResource(R.color.colorAccent)
+            }
             return floorView
         }
 
