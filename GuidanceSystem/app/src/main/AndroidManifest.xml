@@ -43,6 +43,8 @@
         </activity>
         <activity android:name=".activities.AdminHome">
         </activity>
+        <activity android:name=".activities.AddFloor">
+        </activity>
     </application>
 
 </manifest>

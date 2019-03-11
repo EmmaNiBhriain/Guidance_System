@@ -3,7 +3,6 @@ package wit.org.guidancesystem.activities
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import wit.org.guidancesystem.AddBuilding
 import wit.org.guidancesystem.Base
 import wit.org.guidancesystem.R
 
@@ -18,7 +17,7 @@ class AdminHome : Base() {
     }
 
     fun addBuilding(view: View){
-        intent = Intent(this, AddBuilding::class.java)
+        intent = Intent(this, AddFloor::class.java)
         startActivity(intent)
     }
 }
