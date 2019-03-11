@@ -90,6 +90,14 @@ class AddFloor : AppCompatActivity(){
                 }
                 else if(metre.type == AreaType.CORRIDOR){
                     metreSquare.setBackgroundResource(R.color.colorPrimary)
+                    metre.type = AreaType.WALL
+                }
+                else if(metre.type == AreaType.WALL){
+                    metreSquare.setBackgroundResource(R.color.colorBlack)
+                    metre.type = AreaType.ROOM
+                }
+                else{
+                    metreSquare.setBackgroundResource(R.color.colorGrey)
                     metre.type = AreaType.OTHER
                 }
 
