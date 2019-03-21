@@ -66,11 +66,11 @@ class AddFloor : AppCompatActivity(){
     private fun menu_confirm(){
         AlertDialog.Builder(this).setTitle("Add Floor")
             .setMessage("Please confirm that your layout can be saved")
-            .setPositiveButton("OK", DialogInterface.OnClickListener{dialog, which ->
+            .setPositiveButton("OK"){dialog, which ->
                 val ref = FirebaseDatabase.getInstance().getReference("Buildings")
 
                 val buildingid = ref.push().key
-                val name = "First Floor"
+                val name = "Test Floor"
                 val building= BuildingModel(buildingid!!, name, metres)
 
                 ref.child(buildingid).setValue(building).addOnCompleteListener{
@@ -79,7 +79,7 @@ class AddFloor : AppCompatActivity(){
 
                 intent = Intent(this, AdminHome::class.java)
                 startActivity(intent)
-            })
+            }
             .show()
     }
 
