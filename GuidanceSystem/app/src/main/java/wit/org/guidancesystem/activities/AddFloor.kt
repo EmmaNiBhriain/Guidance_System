@@ -2,9 +2,11 @@ package wit.org.guidancesystem.activities
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.view.*
 import android.widget.AdapterView
 import android.widget.BaseAdapter
@@ -54,6 +56,17 @@ class AddFloor : AppCompatActivity(){
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item?.itemId){
             R.id.item_confirm ->{
+                menu_confirm()
+
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun menu_confirm(){
+        AlertDialog.Builder(this).setTitle("Add Floor")
+            .setMessage("Please confirm that your layout can be saved")
+            .setPositiveButton("OK", DialogInterface.OnClickListener{dialog, which ->
                 val ref = FirebaseDatabase.getInstance().getReference("Buildings")
 
                 val buildingid = ref.push().key
@@ -66,9 +79,8 @@ class AddFloor : AppCompatActivity(){
 
                 intent = Intent(this, AdminHome::class.java)
                 startActivity(intent)
-            }
-        }
-        return super.onOptionsItemSelected(item)
+            })
+            .show()
     }
 
     private fun populateGrid(){
