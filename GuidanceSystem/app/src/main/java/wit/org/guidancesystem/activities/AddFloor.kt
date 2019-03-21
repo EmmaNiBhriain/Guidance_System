@@ -1,6 +1,7 @@
 package wit.org.guidancesystem.activities
 
 import android.annotation.SuppressLint
+import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -8,9 +9,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.view.*
-import android.widget.AdapterView
-import android.widget.BaseAdapter
-import android.widget.Button
+import android.widget.*
 import kotlinx.android.synthetic.main.add_floor.*
 import kotlinx.android.synthetic.main.building_square.*
 import wit.org.guidancesystem.R
@@ -18,8 +17,6 @@ import wit.org.guidancesystem.R.color.colorAccent
 import wit.org.guidancesystem.models.AreaType
 import wit.org.guidancesystem.models.Metre
 import java.text.FieldPosition
-import android.widget.Toast
-import android.widget.TextView
 import com.google.firebase.database.FirebaseDatabase
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
@@ -27,7 +24,7 @@ import wit.org.guidancesystem.models.BuildingModel
 import kotlin.math.floor
 
 
-class AddFloor : AppCompatActivity(){
+class AddFloor : AppCompatActivity(), AnkoLogger{
 
     var metres = ArrayList<Metre>()
 
@@ -42,10 +39,16 @@ class AddFloor : AppCompatActivity(){
         adapter = FloorAdapter(this, metres)
         floorLayout.adapter = adapter
 
-        floorLayout.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, i, l ->
-            val item = (view.findViewById(R.id.metreSquare) as TextView).text.toString()
-        };
+
+
+       // floorLayout.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, i, l ->
+         //   val item = (view.findViewById(R.id.metreSquare) as TextView).text.toString()
+        //};
+
+
+
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater = menuInflater
@@ -64,21 +67,33 @@ class AddFloor : AppCompatActivity(){
     }
 
     private fun menu_confirm(){
+        val floorName = EditText(this)
+
         AlertDialog.Builder(this).setTitle("Add Floor")
             .setMessage("Please confirm that your layout can be saved")
+            .setView(floorName)
             .setPositiveButton("OK"){dialog, which ->
-                val ref = FirebaseDatabase.getInstance().getReference("Buildings")
 
-                val buildingid = ref.push().key
-                val name = "Test Floor"
-                val building= BuildingModel(buildingid!!, name, metres)
+                var nameOfFloor = floorName.getText().toString();
 
-                ref.child(buildingid).setValue(building).addOnCompleteListener{
-                    Toast.makeText(applicationContext, "Building saved successfully", Toast.LENGTH_LONG).show()
+                if(nameOfFloor != ""){
+                    val ref = FirebaseDatabase.getInstance().getReference("Buildings")
+
+                    val buildingid = ref.push().key
+                    val name = nameOfFloor
+                    val building= BuildingModel(buildingid!!, name, metres)
+
+                    ref.child(buildingid).setValue(building).addOnCompleteListener{
+                        Toast.makeText(applicationContext, "Building saved successfully", Toast.LENGTH_LONG).show()
+                    }
+
+                    intent = Intent(this, AdminHome::class.java)
+                    startActivity(intent)
+                }
+                else{
+                    Toast.makeText(applicationContext, "Please enter a valid name", Toast.LENGTH_SHORT).show()
                 }
 
-                intent = Intent(this, AdminHome::class.java)
-                startActivity(intent)
             }
             .show()
     }
@@ -86,7 +101,7 @@ class AddFloor : AppCompatActivity(){
     private fun populateGrid(){
         for (i in 10 downTo 1){
             for(j in 1..10){
-                var new = Metre(AreaType.OTHER, j, i)
+                var new = Metre(AreaType.OTHER, "", j, i)
                 metres.add(new)
             }
 
@@ -97,8 +112,6 @@ class AddFloor : AppCompatActivity(){
     fun changeType(view:View){
         metreSquare.setBackgroundColor(R.color.colorAccent)
     }
-
-
 
     class FloorAdapter:BaseAdapter, AnkoLogger{
         var metreList = ArrayList<Metre>()
@@ -149,8 +162,39 @@ class AddFloor : AppCompatActivity(){
                 }
 
             }
+
+            metreSquare.setOnLongClickListener{
+
+                var roomName = EditText(context)
+                AlertDialog.Builder(context as Context)
+                    .setTitle("Room Name")
+                    .setMessage("Enter a name for this room")
+                    .setView(roomName)
+                    .setPositiveButton("OK"){dialog, which ->
+                        var nameOfRoom = roomName.getText().toString();
+
+                        if(nameOfRoom != ""){
+                            metre.name = nameOfRoom
+
+                        }
+                        else{
+                            Toast.makeText(context, "Please enter a valid name", Toast.LENGTH_SHORT).show()
+                        }
+
+                    }
+                    .show()
+
+
+                true
+            }
+
+
             return floorView
         }
+
+
+
+
 
         override fun getItemId(position: Int): Long {
             return position.toLong()
