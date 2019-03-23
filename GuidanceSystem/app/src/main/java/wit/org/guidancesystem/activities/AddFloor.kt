@@ -192,6 +192,13 @@ class AddFloor : AppCompatActivity(), AnkoLogger{
                             if(nameOfRoom != ""){
                                 metre.name = nameOfRoom
 
+                                if(doorBluetoothId.getText().toString() != ""){
+                                    metre.bluetoothId = doorBluetoothId.text.toString()
+                                }
+                                else{
+                                    Toast.makeText(context, "Please enter a valid Bluetooth ID", Toast.LENGTH_SHORT).show()
+
+                                }
                             }
                             else{
                                 Toast.makeText(context, "Please enter a valid name", Toast.LENGTH_SHORT).show()
@@ -200,7 +207,7 @@ class AddFloor : AppCompatActivity(), AnkoLogger{
                         }
                         .show()
                 }
-                
+
                 true
             }
 
