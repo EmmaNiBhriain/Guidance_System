@@ -15,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_building.*
 import kotlinx.android.synthetic.main.card_building.view.*
 import org.jetbrains.anko.intentFor
+import wit.org.guidancesystem.activities.DestinationMenu
 import wit.org.guidancesystem.main.MainApp
 import wit.org.guidancesystem.models.BuildingModel
 
@@ -31,19 +32,10 @@ class BuildingActivity : Base(), BuildingListener {
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = BuildingAdapter(app.buildings.findAll(), this)
 
-        addBuilding.setOnClickListener {
-            intent = Intent(this, AddBuilding::class.java)
-            startActivityForResult(intent,0)
-        }
-
-        addRoom.setOnClickListener {
-            intent = Intent(this, Room::class.java)
-            startActivityForResult(intent, 0)
-        }
     }
 
 
 
     override fun onBuildingClick(building: BuildingModel) {
-        startActivityForResult(intentFor<AddBuilding>().putExtra("building_edit", building), 0)    }
+        startActivity(intentFor<DestinationMenu>().putExtra("building_view", building))  }
 }

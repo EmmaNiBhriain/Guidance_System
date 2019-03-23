@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         tools:context=".activities.DestinationMenu">
 
     <android.support.design.widget.AppBarLayout
@@ -21,26 +22,20 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".activities.DestinationMenu">
+
 
 
         <GridView
                 android:id = "@+id/availableRooms"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:horizontalSpacing="2dp"
-                android:verticalSpacing="2dp"
-                android:numColumns="2"
+                android:columnWidth="150dp"
+                android:horizontalSpacing="15dp"
+                android:numColumns="auto_fit"
+                android:verticalSpacing="15dp"
         >
 
     </GridView>
 
-    </LinearLayout>
+</LinearLayout>
 
-</android.support.design.widget.CoordinatorLayout>
