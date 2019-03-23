@@ -169,26 +169,38 @@ class AddFloor : AppCompatActivity(), AnkoLogger{
 
             metreSquare.setOnLongClickListener{
 
-                var roomName = EditText(context)
-                AlertDialog.Builder(context as Context)
-                    .setTitle("Room Name")
-                    .setMessage("Enter a name for this room")
-                    .setView(roomName)
-                    .setPositiveButton("OK"){dialog, which ->
-                        var nameOfRoom = roomName.getText().toString();
+                if(metre.type == AreaType.DOOR){
+                    var roomName = EditText(context)
+                    roomName.setHint("Enter name of room")
 
-                        if(nameOfRoom != ""){
-                            metre.name = nameOfRoom
+                    var doorBluetoothId = EditText(context)
+                    doorBluetoothId.setHint("Enter Bluetooth ID for this room")
+
+                    var layout = LinearLayout(context)
+                    layout.orientation = LinearLayout.VERTICAL
+
+                    layout.addView(roomName)
+                    layout.addView(doorBluetoothId)
+
+                    AlertDialog.Builder(context as Context)
+                        .setTitle("Room Name")
+                        .setMessage("Enter a name for this room")
+                        .setView(layout)
+                        .setPositiveButton("OK"){dialog, which ->
+                            var nameOfRoom = roomName.getText().toString();
+
+                            if(nameOfRoom != ""){
+                                metre.name = nameOfRoom
+
+                            }
+                            else{
+                                Toast.makeText(context, "Please enter a valid name", Toast.LENGTH_SHORT).show()
+                            }
 
                         }
-                        else{
-                            Toast.makeText(context, "Please enter a valid name", Toast.LENGTH_SHORT).show()
-                        }
-
-                    }
-                    .show()
-
-
+                        .show()
+                }
+                
                 true
             }
 
