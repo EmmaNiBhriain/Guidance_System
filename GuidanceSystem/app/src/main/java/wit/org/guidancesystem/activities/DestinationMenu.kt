@@ -9,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import wit.org.guidancesystem.R
 
 import kotlinx.android.synthetic.main.activity_destination_menu.*
@@ -86,6 +88,16 @@ class DestinationMenu : AppCompatActivity(), AnkoLogger {
 
             roomView.room_square.setOnClickListener {
                 info{"!!Room selected is " + room.name}
+
+                var userId = FirebaseAuth.getInstance().currentUser!!.uid
+                val ref = FirebaseDatabase.getInstance().getReference("users").child(userId).child("Destination")
+
+                val destinationid = ref.push().key
+                val destination = room
+
+                ref.child(destinationid!!).setValue(destination).addOnCompleteListener{
+                    Toast.makeText(context, "Destination saved successfully", Toast.LENGTH_LONG).show()
+                }
 
             }
 
