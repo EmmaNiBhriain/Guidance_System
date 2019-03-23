@@ -20,13 +20,14 @@ import java.text.FieldPosition
 import com.google.firebase.database.FirebaseDatabase
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
+import wit.org.guidancesystem.main.MainApp
 import wit.org.guidancesystem.models.BuildingModel
 import kotlin.math.floor
-
 
 class AddFloor : AppCompatActivity(), AnkoLogger{
 
     var metres = ArrayList<Metre>()
+    lateinit var app: MainApp
 
     var adapter:FloorAdapter?= null
 
@@ -38,6 +39,7 @@ class AddFloor : AppCompatActivity(), AnkoLogger{
 
         adapter = FloorAdapter(this, metres)
         floorLayout.adapter = adapter
+        app = application as MainApp
 
 
 
@@ -77,15 +79,12 @@ class AddFloor : AppCompatActivity(), AnkoLogger{
                 var nameOfFloor = floorName.getText().toString();
 
                 if(nameOfFloor != ""){
-                    val ref = FirebaseDatabase.getInstance().getReference("Buildings")
 
-                    val buildingid = ref.push().key
-                    val name = nameOfFloor
-                    val building= BuildingModel(buildingid!!, name, metres)
 
-                    ref.child(buildingid).setValue(building).addOnCompleteListener{
-                        Toast.makeText(applicationContext, "Building saved successfully", Toast.LENGTH_LONG).show()
-                    }
+                    var building = BuildingModel()
+                    building.name = nameOfFloor
+                    building.rooms = metres
+                    app.buildings.create(building)
 
                     intent = Intent(this, AdminHome::class.java)
                     startActivity(intent)

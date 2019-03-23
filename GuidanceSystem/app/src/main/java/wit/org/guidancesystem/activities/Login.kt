@@ -9,13 +9,21 @@ import kotlinx.android.synthetic.main.login.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.toast
 import wit.org.guidancesystem.AddBuilding
+import wit.org.guidancesystem.BuildingActivity
 import wit.org.guidancesystem.R
+import wit.org.guidancesystem.firebase.BuildingFireStore
+import wit.org.guidancesystem.main.MainApp
 
 class Login : AppCompatActivity(), AnkoLogger {
 
     var auth: FirebaseAuth = FirebaseAuth.getInstance()
+    var firestore: BuildingFireStore?=null
+
+    lateinit var app: MainApp
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        app = application as MainApp
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login)
 
@@ -28,16 +36,23 @@ class Login : AppCompatActivity(), AnkoLogger {
             toast("Please provide email + password")
         }
         else {
+
             auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    if(email=="obrienemma0@gmail.com"){
-                        intent = Intent(this, AdminHome::class.java)
-                        startActivity(intent)
+                    firestore = app.buildings
+                    if(firestore!=null){
+                        firestore!!.fetchBuildings {
+                            if(email=="obrienemma0@gmail.com"){
+                                intent = Intent(this, AdminHome::class.java)
+                                startActivity(intent)
+                            }
+                            else if(email == "007eob@gmail.com"){
+                                intent = Intent(this, BuildingActivity::class.java)
+                                startActivity(intent)
+                            }
+                        }
                     }
-                    else if(email == "007eob@gmail.com"){
-                        intent = Intent(this, DestinationMenu::class.java)
-                        startActivity(intent)
-                    }
+
                     else{
                         intent = Intent(this, AddBuilding::class.java)
                         startActivity(intent)

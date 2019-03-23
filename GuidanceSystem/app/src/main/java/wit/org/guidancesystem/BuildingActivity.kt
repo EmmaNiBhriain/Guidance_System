@@ -29,7 +29,7 @@ class BuildingActivity : Base(), BuildingListener {
 
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = BuildingAdapter(app.buildings, this)
+        recyclerView.adapter = BuildingAdapter(app.buildings.findAll(), this)
 
         addBuilding.setOnClickListener {
             intent = Intent(this, AddBuilding::class.java)

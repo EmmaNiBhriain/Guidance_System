@@ -48,7 +48,7 @@ class AddBuilding : Base(){
 
     }
 
-    private fun createBuildings(name:String, rooms:ArrayList<Metre>){
+   /* private fun createBuildings(name:String, rooms:ArrayList<Metre>){
         //building.rooms.addAll(listOf("room1","room2"))
         info{building.rooms.size}
         app.buildings.add(building)
@@ -64,7 +64,7 @@ class AddBuilding : Base(){
         ref.child(buildingid).setValue(building).addOnCompleteListener{
             Toast.makeText(applicationContext, "Building saved successfully", Toast.LENGTH_LONG).show()
         }
-    }
+    }*/
 
 
 }
