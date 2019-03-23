@@ -34,6 +34,10 @@ class Login : AppCompatActivity(), AnkoLogger {
                         intent = Intent(this, AdminHome::class.java)
                         startActivity(intent)
                     }
+                    else if(email == "007eob@gmail.com"){
+                        intent = Intent(this, DestinationMenu::class.java)
+                        startActivity(intent)
+                    }
                     else{
                         intent = Intent(this, AddBuilding::class.java)
                         startActivity(intent)

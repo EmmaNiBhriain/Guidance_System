@@ -45,6 +45,11 @@
         </activity>
         <activity android:name=".activities.AddFloor">
         </activity>
+        <activity
+                android:name=".activities.DestinationMenu"
+                android:label="@string/title_activity_destination_menu"
+                android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>
