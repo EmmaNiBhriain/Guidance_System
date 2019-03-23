@@ -101,7 +101,7 @@ class AddFloor : AppCompatActivity(), AnkoLogger{
     private fun populateGrid(){
         for (i in 10 downTo 1){
             for(j in 1..10){
-                var new = Metre(AreaType.OTHER, "", j, i)
+                var new = Metre(AreaType.CORRIDOR, "", j, i)
                 metres.add(new)
             }
 
@@ -140,21 +140,25 @@ class AddFloor : AppCompatActivity(), AnkoLogger{
             var metreSquare = floorView.findViewById(R.id.metreSquare) as Button
 
             metreSquare.setOnClickListener {
-                if(metre.type == AreaType.OTHER){
-                    metreSquare.setBackgroundResource(R.color.colorAccent)
-                    metre.type = AreaType.CORRIDOR
-                }
-                else if(metre.type == AreaType.CORRIDOR){
-                    metreSquare.setBackgroundResource(R.color.colorPrimary)
+                if(metre.type == AreaType.CORRIDOR){ //make it a wall
+                    metreSquare.setBackgroundResource(R.color.colorWall)
                     metre.type = AreaType.WALL
                 }
-                else if(metre.type == AreaType.WALL){
-                    metreSquare.setBackgroundResource(R.color.colorBlack)
+                else if(metre.type == AreaType.WALL){ //make it a door
+                    metreSquare.setBackgroundResource(R.color.colorDoor)
+                    metre.type = AreaType.DOOR
+                }
+                else if(metre.type == AreaType.DOOR){ //make it a room
+                    metreSquare.setBackgroundResource(R.color.colorRoom)
                     metre.type = AreaType.ROOM
                 }
+                else if(metre.type == AreaType.ROOM){ //make it a danger area
+                    metreSquare.setBackgroundResource(R.color.colorDanger)
+                    metre.type = AreaType.DANGER
+                }
                 else{
-                    metreSquare.setBackgroundResource(R.color.colorGrey)
-                    metre.type = AreaType.OTHER
+                    metreSquare.setBackgroundResource(R.color.colorCorridor)
+                    metre.type = AreaType.CORRIDOR
                 }
 
                 info {

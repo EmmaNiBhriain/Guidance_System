@@ -5,4 +5,10 @@
     <color name="colorAccent">#D81B60</color>
     <color name="colorBlack">#000000</color>
     <color name="colorGrey">#AAAAAA</color>
+    <color name="colorRoom">#8c16cc</color>
+    <color name="colorDanger">#c11509</color>
+    <color name="colorDoor">#2283d8</color>
+    <color name="colorCorridor">#4ecad3</color>
+    <color name="colorWall">#664805</color>
+
 </resources>
