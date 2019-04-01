@@ -13,20 +13,24 @@ import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.ValueDependentColor
 import com.jjoe64.graphview.DefaultLabelFormatter
 import com.jjoe64.graphview.helper.StaticLabelsFormatter
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
+import wit.org.guidancesystem.main.MainApp
 
 
+class Stats : AppCompatActivity(), AnkoLogger {
 
-
-
-
-
-
-class Stats : AppCompatActivity() {
+    lateinit var app: MainApp
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_stats)
         setSupportActionBar(toolbar)
+
+        app = application as MainApp
+        info{"!!! " + app.destinations.findAll().size}
+
 
         val graph = findViewById(R.id.usagegraph) as GraphView
         val series =  BarGraphSeries<DataPoint>(arrayOf(

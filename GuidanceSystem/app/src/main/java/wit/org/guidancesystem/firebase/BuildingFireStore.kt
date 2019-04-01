@@ -6,12 +6,14 @@ import com.google.firebase.database.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import wit.org.guidancesystem.models.BuildingModel
+import wit.org.guidancesystem.models.Metre
 
 class BuildingFireStore(val context: Context):AnkoLogger {
 
     val buildings = ArrayList<BuildingModel>()
     lateinit var userId:String
     lateinit var db:DatabaseReference
+
 
     fun findAll():List<BuildingModel>{
         return buildings
@@ -64,4 +66,7 @@ class BuildingFireStore(val context: Context):AnkoLogger {
         db.child("users").child(userId).child("Buildings").addListenerForSingleValueEvent(valueEventListener)
         info { "!!!! " + buildings.size+ userId }
     }
+
+
+
 }

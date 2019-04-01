@@ -36,6 +36,9 @@ class DestinationMenu : AppCompatActivity(), AnkoLogger {
         setContentView(R.layout.activity_destination_menu)
         setSupportActionBar(toolbar)
 
+        app = application as MainApp
+
+
         if(intent.hasExtra("building_view")){
             building = intent.extras.getParcelable<BuildingModel>("building_view")
             info{"Building name " + building.name}
@@ -51,7 +54,7 @@ class DestinationMenu : AppCompatActivity(), AnkoLogger {
 
         adapter = DestinationAdapter(this, rooms)
         availableRooms.adapter = adapter
-        app = application as MainApp
+
 
     }
 

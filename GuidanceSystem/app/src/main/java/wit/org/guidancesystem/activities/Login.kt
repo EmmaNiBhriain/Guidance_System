@@ -13,12 +13,14 @@ import wit.org.guidancesystem.BuildingActivity
 import wit.org.guidancesystem.R
 import wit.org.guidancesystem.Stats
 import wit.org.guidancesystem.firebase.BuildingFireStore
+import wit.org.guidancesystem.firebase.DestinationFireStore
 import wit.org.guidancesystem.main.MainApp
 
 class Login : AppCompatActivity(), AnkoLogger {
 
     var auth: FirebaseAuth = FirebaseAuth.getInstance()
     var firestore: BuildingFireStore?=null
+    var destFirestore: DestinationFireStore?=null
 
     lateinit var app: MainApp
 
@@ -43,15 +45,23 @@ class Login : AppCompatActivity(), AnkoLogger {
                     firestore = app.buildings
                     if(firestore!=null){
                         firestore!!.fetchBuildings {
-                            if(email=="obrienemma0@gmail.com"){
-                                //intent = Intent(this, AdminHome::class.java)
-                                intent = Intent(this, Stats::class.java)
-                                startActivity(intent)
+                            destFirestore = app.destinations
+                            if(destFirestore!=null){
+                                destFirestore!!.fetchDestinations {
+                                    if(email=="obrienemma0@gmail.com"){
+                                        //intent = Intent(this, AdminHome::class.java)
+
+                                        intent = Intent(this, Stats::class.java)
+                                        startActivity(intent)
+                                    }
+                                    else if(email == "007eob@gmail.com"){
+                                        intent = Intent(this, BuildingActivity::class.java)
+                                        startActivity(intent)
+                                    }
+                                }
                             }
-                            else if(email == "007eob@gmail.com"){
-                                intent = Intent(this, BuildingActivity::class.java)
-                                startActivity(intent)
-                            }
+
+
                         }
                     }
 

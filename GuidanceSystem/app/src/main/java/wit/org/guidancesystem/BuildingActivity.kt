@@ -14,6 +14,7 @@ import android.widget.Toast
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_building.*
 import kotlinx.android.synthetic.main.card_building.view.*
+import org.jetbrains.anko.info
 import org.jetbrains.anko.intentFor
 import wit.org.guidancesystem.activities.DestinationMenu
 import wit.org.guidancesystem.main.MainApp
@@ -27,6 +28,7 @@ class BuildingActivity : Base(), BuildingListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_building)
         app = application as MainApp
+        info{"!!!" + app.destinations.findAll().size}
 
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
