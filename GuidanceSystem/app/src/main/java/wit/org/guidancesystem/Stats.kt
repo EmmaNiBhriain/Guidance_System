@@ -16,6 +16,7 @@ import com.jjoe64.graphview.helper.StaticLabelsFormatter
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import wit.org.guidancesystem.main.MainApp
+import wit.org.guidancesystem.models.Metre
 
 
 class Stats : AppCompatActivity(), AnkoLogger {
@@ -31,19 +32,64 @@ class Stats : AppCompatActivity(), AnkoLogger {
         app = application as MainApp
         info{"!!! " + app.destinations.findAll().size}
 
+        //frequency in a week TODO limit it to a week
+        var frequency = HashMap<Metre, Int>()
+
+        for (m in app.destinations.findAll()){
+            if(m.visited ){
+                var current = frequency.get(m)
+                frequency.put(m, if (current == null) 1 else current!! + 1);
+            }
+        }
+
+        var points = ArrayList<DataPoint>()
+
+        var i = 0
+        for (pair in frequency){
+            points.add(DataPoint(i.toDouble(), pair.value.toDouble()))
+            i++
+        }
+
+
+        for (ent in frequency.entries) {
+            info{"Element " + ent.key + " occurs " + ent.value + " times"}
+
+        }
+
+        val arrayOfPoints = arrayOfNulls<DataPoint>(points.size)
+        points.toArray(arrayOfPoints)
+
+        info { "!!! points" + arrayOfPoints.size }
 
         val graph = findViewById(R.id.usagegraph) as GraphView
-        val series =  BarGraphSeries<DataPoint>(arrayOf(
-            DataPoint(0.0, -1.0),
-            DataPoint(1.0, 5.0),
-            DataPoint(2.0, 3.0)
-        ));
+        val series =  BarGraphSeries<DataPoint>(arrayOfPoints);
         graph.addSeries(series);
 
 
+        //Add labels on the x axis
+
+        var labels = ArrayList<String>()
+
+        for (pair in frequency){
+            labels.add(pair.key.name)
+        }
+
+        val arrayOfLabels = arrayOfNulls<String>(labels.size)
+        labels.toArray(arrayOfLabels)
+
         val staticLabelsFormatter = StaticLabelsFormatter(graph)
-        staticLabelsFormatter.setHorizontalLabels(arrayOf("old", "middle", "new"))
+        staticLabelsFormatter.setHorizontalLabels(arrayOfLabels)
         graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
+
+
+        graph.graphContentLeft
+
+        //Set the ranges of the axes
+        graph.getViewport().setMinX(0.0);
+        graph.getViewport().setMinY(0.0);
+
+        graph.getViewport().setYAxisBoundsManual(true);
+
 
         // styling
         series.setValueDependentColor { data ->
