@@ -82,12 +82,11 @@ class Stats : AppCompatActivity(), AnkoLogger {
         graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
 
 
-        graph.graphContentLeft
-
         //Set the ranges of the axes
         graph.getViewport().setMinX(0.0);
         graph.getViewport().setMinY(0.0);
 
+        info{"!!!! Max y " + graph.getViewport().getMaxY(true)}
         graph.getViewport().setYAxisBoundsManual(true);
 
 
@@ -100,7 +99,7 @@ class Stats : AppCompatActivity(), AnkoLogger {
             )
         }
 
-        series.spacing = 10
+        series.spacing = 40
 
 // draw values on top
         series.isDrawValuesOnTop = true

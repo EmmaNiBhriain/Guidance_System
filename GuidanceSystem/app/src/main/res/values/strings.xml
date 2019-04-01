@@ -14,4 +14,5 @@
     <string name="ok">ok</string>
     <string name="title_activity_destination_menu">DestinationMenu</string>
     <string name="title_activity_stats">Stats</string>
+    <string name="view_stats">View Stats</string>
 </resources>

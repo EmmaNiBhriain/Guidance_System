@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import wit.org.guidancesystem.Base
 import wit.org.guidancesystem.R
+import wit.org.guidancesystem.Stats
 
 class AdminHome : Base() {
 
@@ -18,6 +19,11 @@ class AdminHome : Base() {
 
     fun addBuilding(view: View){
         intent = Intent(this, AddFloor::class.java)
+        startActivity(intent)
+    }
+
+    fun viewStats(view:View){
+        intent = Intent(this, Stats::class.java)
         startActivity(intent)
     }
 }

@@ -49,9 +49,7 @@ class Login : AppCompatActivity(), AnkoLogger {
                             if(destFirestore!=null){
                                 destFirestore!!.fetchDestinations {
                                     if(email=="obrienemma0@gmail.com"){
-                                        //intent = Intent(this, AdminHome::class.java)
-
-                                        intent = Intent(this, Stats::class.java)
+                                        intent = Intent(this, AdminHome::class.java)
                                         startActivity(intent)
                                     }
                                     else if(email == "007eob@gmail.com"){
