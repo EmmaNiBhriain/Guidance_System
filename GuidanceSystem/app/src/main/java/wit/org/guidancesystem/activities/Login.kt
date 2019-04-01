@@ -11,6 +11,7 @@ import org.jetbrains.anko.toast
 import wit.org.guidancesystem.AddBuilding
 import wit.org.guidancesystem.BuildingActivity
 import wit.org.guidancesystem.R
+import wit.org.guidancesystem.Stats
 import wit.org.guidancesystem.firebase.BuildingFireStore
 import wit.org.guidancesystem.main.MainApp
 
@@ -43,7 +44,8 @@ class Login : AppCompatActivity(), AnkoLogger {
                     if(firestore!=null){
                         firestore!!.fetchBuildings {
                             if(email=="obrienemma0@gmail.com"){
-                                intent = Intent(this, AdminHome::class.java)
+                                //intent = Intent(this, AdminHome::class.java)
+                                intent = Intent(this, Stats::class.java)
                                 startActivity(intent)
                             }
                             else if(email == "007eob@gmail.com"){

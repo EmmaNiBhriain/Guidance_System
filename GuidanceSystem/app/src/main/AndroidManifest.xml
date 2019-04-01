@@ -50,6 +50,11 @@
                 android:label="@string/title_activity_destination_menu"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+                android:name=".Stats"
+                android:label="@string/title_activity_stats"
+                android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>
