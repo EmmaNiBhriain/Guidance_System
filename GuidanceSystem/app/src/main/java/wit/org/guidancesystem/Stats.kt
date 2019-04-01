@@ -44,11 +44,13 @@ class Stats : AppCompatActivity(), AnkoLogger {
 
         var points = ArrayList<DataPoint>()
 
-        var i = 0
+        points.add(DataPoint(0.0,0.0))
+        var i = 1
         for (pair in frequency){
             points.add(DataPoint(i.toDouble(), pair.value.toDouble()))
             i++
         }
+        points.add(DataPoint(i.toDouble(),0.0))
 
 
         for (ent in frequency.entries) {
@@ -70,9 +72,12 @@ class Stats : AppCompatActivity(), AnkoLogger {
 
         var labels = ArrayList<String>()
 
+        labels.add("")
+
         for (pair in frequency){
             labels.add(pair.key.name)
         }
+        labels.add("")
 
         val arrayOfLabels = arrayOfNulls<String>(labels.size)
         labels.toArray(arrayOfLabels)
@@ -99,10 +104,10 @@ class Stats : AppCompatActivity(), AnkoLogger {
             )
         }
 
-        series.spacing = 40
+        series.spacing = 50
 
 // draw values on top
-        series.isDrawValuesOnTop = true
+        series.isDrawValuesOnTop = false
         series.valuesOnTopColor = Color.RED
     }
 
