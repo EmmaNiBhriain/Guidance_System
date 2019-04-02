@@ -17,6 +17,7 @@ import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import wit.org.guidancesystem.main.MainApp
 import wit.org.guidancesystem.models.Metre
+import java.util.*
 
 
 class Stats : AppCompatActivity(), AnkoLogger {
@@ -86,6 +87,7 @@ class Stats : AppCompatActivity(), AnkoLogger {
         staticLabelsFormatter.setHorizontalLabels(arrayOfLabels)
         graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
 
+        graph.getGridLabelRenderer().setVerticalAxisTitle("Number of Visits");
 
         //Set the ranges of the axes
         graph.getViewport().setMinX(0.0);
@@ -97,10 +99,9 @@ class Stats : AppCompatActivity(), AnkoLogger {
 
         // styling
         series.setValueDependentColor { data ->
+
             Color.rgb(
-                data.x.toInt() * 255 / 4,
-                Math.abs(data.y * 255 / 6).toInt(),
-                100
+                90 + data.y.toInt() * 10, 70, 168
             )
         }
 
