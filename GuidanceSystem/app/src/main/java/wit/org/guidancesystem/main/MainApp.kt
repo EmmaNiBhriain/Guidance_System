@@ -13,6 +13,7 @@ class MainApp : Application(), AnkoLogger {
     lateinit var buildings:BuildingFireStore
     lateinit var destinations:DestinationFireStore
     var users = ArrayList<String>()
+    var targetUserEmail = ""
     val rooms = ArrayList<RoomModel>()
 
     override fun onCreate() {

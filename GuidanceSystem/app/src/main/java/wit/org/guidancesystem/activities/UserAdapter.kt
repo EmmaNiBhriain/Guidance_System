@@ -32,8 +32,13 @@ class UserAdapter constructor(private var users:List<String>,private val listene
     class MainHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(user: String, listener: UserListener) {
-            itemView.userEmail.text = user
+            itemView.userEmail.text = decodeUserEmail(user)
             itemView.setOnClickListener { listener.onUserClick(user) }
+        }
+
+
+        fun decodeUserEmail(userEmail: String): String {
+            return userEmail.replace(",", ".")
         }
     }
 }

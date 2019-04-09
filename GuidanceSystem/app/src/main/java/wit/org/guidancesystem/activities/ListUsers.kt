@@ -1,5 +1,6 @@
 package wit.org.guidancesystem.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +32,10 @@ class ListUsers : AppCompatActivity(),AnkoLogger, UserListener {
 
 
 
-    override fun onUserClick(user: String) {  }
+    override fun onUserClick(user: String) {
+        app.targetUserEmail = user
+        intent = Intent(this, AddFloor::class.java)
+        startActivity(intent)
+    }
 
 }

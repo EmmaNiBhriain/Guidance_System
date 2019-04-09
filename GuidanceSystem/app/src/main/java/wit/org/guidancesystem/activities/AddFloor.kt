@@ -84,8 +84,10 @@ class AddFloor : AppCompatActivity(), AnkoLogger{
                     var building = BuildingModel()
                     building.name = nameOfFloor
                     building.rooms = metres
-                    app.buildings.create(building)
+                    app.buildings.create(app.targetUserEmail, building)
 
+                    app.users.clear()
+                    app.targetUserEmail = "" //reset targetUserEmail
                     intent = Intent(this, AdminHome::class.java)
                     startActivity(intent)
                 }

@@ -25,12 +25,13 @@ class BuildingFireStore(val context: Context):AnkoLogger {
         return foundBuilding
     }
 
-    fun create(building:BuildingModel){
-        val key = db.child("users").child(userEmail).child("Buildings").push().key
+    fun create(targetEmail:String, building:BuildingModel){
+        //var emailId = decodeUserEmail(targetEmail)
+        val key = db.child("users").child(targetEmail).child("Buildings").push().key
         building.id = key!!
         buildings.add(building)
 
-        db.child("users").child(userEmail).child("Buildings").child(key).setValue(building)
+        db.child("users").child(targetEmail).child("Buildings").child(key).setValue(building)
     }
 
     fun update(building:BuildingModel) {
@@ -76,9 +77,7 @@ class BuildingFireStore(val context: Context):AnkoLogger {
         return userEmail.replace(".", ",")
     }
 
-    fun decodeUserEmail(userEmail: String): String {
-        return userEmail.replace(",", ".")
-    }
+
 
 
 }
