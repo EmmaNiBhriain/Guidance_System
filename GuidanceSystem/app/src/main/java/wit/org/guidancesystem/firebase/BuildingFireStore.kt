@@ -68,6 +68,7 @@ class BuildingFireStore(val context: Context):AnkoLogger {
         db = FirebaseDatabase.getInstance().reference
         buildings.clear()
         db.child("users").child(userEmail).child("Buildings").addListenerForSingleValueEvent(valueEventListener)
+
         info { "!!!! " + buildings.size+ userEmail }
     }
 

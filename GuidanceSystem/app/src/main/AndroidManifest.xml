@@ -60,6 +60,11 @@
                 android:label="@string/title_activity_room_graph"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+                android:name=".activities.ListUsers"
+                android:label="@string/title_activity_list_users"
+                android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

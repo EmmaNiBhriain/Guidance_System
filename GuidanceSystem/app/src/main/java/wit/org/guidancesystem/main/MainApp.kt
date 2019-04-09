@@ -12,6 +12,7 @@ import wit.org.guidancesystem.models.RoomModel
 class MainApp : Application(), AnkoLogger {
     lateinit var buildings:BuildingFireStore
     lateinit var destinations:DestinationFireStore
+    var users = ArrayList<String>()
     val rooms = ArrayList<RoomModel>()
 
     override fun onCreate() {
