@@ -15,4 +15,6 @@
     <string name="title_activity_destination_menu">DestinationMenu</string>
     <string name="title_activity_stats">Stats</string>
     <string name="view_stats">View Stats</string>
+    <string name="title_activity_room_graph">RoomGraph</string>
+    <string name="view_room_stats">View Room Stats</string>
 </resources>

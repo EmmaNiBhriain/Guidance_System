@@ -55,6 +55,11 @@
                 android:label="@string/title_activity_stats"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+                android:name=".RoomGraph"
+                android:label="@string/title_activity_room_graph"
+                android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>
