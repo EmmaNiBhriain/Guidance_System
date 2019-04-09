@@ -13,6 +13,7 @@ class BuildingFireStore(val context: Context):AnkoLogger {
     val buildings = ArrayList<BuildingModel>()
     lateinit var userId:String
     lateinit var db:DatabaseReference
+    lateinit var userEmail:String
 
 
     fun findAll():List<BuildingModel>{
@@ -25,10 +26,11 @@ class BuildingFireStore(val context: Context):AnkoLogger {
     }
 
     fun create(building:BuildingModel){
-        val key = db.child("users").child("EMCJUDYRJKZlouOnzjGVfxpQTWR2").child("Buildings").push().key
+        val key = db.child("users").child(userEmail).child("Buildings").push().key
         building.id = key!!
         buildings.add(building)
-        db.child("users").child("EMCJUDYRJKZlouOnzjGVfxpQTWR2").child("Buildings").child(key).setValue(building)
+
+        db.child("users").child(userEmail).child("Buildings").child(key).setValue(building)
     }
 
     fun update(building:BuildingModel) {
@@ -61,12 +63,21 @@ class BuildingFireStore(val context: Context):AnkoLogger {
         }
 
         userId = FirebaseAuth.getInstance().currentUser!!.uid
+        userEmail = encodeUserEmail(FirebaseAuth.getInstance().currentUser!!.email!!)
+        info{"!!!  Email" + userEmail}
         db = FirebaseDatabase.getInstance().reference
         buildings.clear()
-        db.child("users").child(userId).child("Buildings").addListenerForSingleValueEvent(valueEventListener)
-        info { "!!!! " + buildings.size+ userId }
+        db.child("users").child(userEmail).child("Buildings").addListenerForSingleValueEvent(valueEventListener)
+        info { "!!!! " + buildings.size+ userEmail }
     }
 
+    fun encodeUserEmail(userEmail: String): String {
+        return userEmail.replace(".", ",")
+    }
+
+    fun decodeUserEmail(userEmail: String): String {
+        return userEmail.replace(",", ".")
+    }
 
 
 }
