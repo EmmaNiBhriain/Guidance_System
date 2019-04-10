@@ -27,4 +27,8 @@ class MainApp : Application(), AnkoLogger {
         //uildings.add(BuildingModel("12343242", "Away", test1))
 
     }
+
+    fun encodeUserEmail(userEmail: String): String {
+        return userEmail.replace(".", ",")
+    }
 }

@@ -13,6 +13,7 @@ class DestinationFireStore (val context: Context): AnkoLogger {
     val destinations = ArrayList<Metre>()
 
     lateinit var userId:String
+    lateinit var userEmail:String
     lateinit var db: DatabaseReference
 
     fun findAll():List<Metre>{
@@ -33,7 +34,12 @@ class DestinationFireStore (val context: Context): AnkoLogger {
 
         userId = FirebaseAuth.getInstance().currentUser!!.uid
         db = FirebaseDatabase.getInstance().reference
+        userEmail = encodeUserEmail(FirebaseAuth.getInstance().currentUser!!.email!!)
         destinations.clear()
         db.child("users").child("EMCJUDYRJKZlouOnzjGVfxpQTWR2").child("Destination").addListenerForSingleValueEvent(valueEventListener)
+    }
+
+    fun encodeUserEmail(userEmail: String): String {
+        return userEmail.replace(".", ",")
     }
 }

@@ -5,8 +5,10 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.login.*
 import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
 import org.jetbrains.anko.toast
 import wit.org.guidancesystem.AddBuilding
 import wit.org.guidancesystem.BuildingActivity
@@ -52,11 +54,15 @@ class Login : AppCompatActivity(), AnkoLogger {
                                         intent = Intent(this, AdminHome::class.java)
                                         startActivity(intent)
                                     }
-                                    else if(email == "007eob@gmail.com"){
+                                    else{
                                         intent = Intent(this, BuildingActivity::class.java)
                                         startActivity(intent)
                                     }
                                 }
+                            }
+                            else{
+                                intent = Intent(this, BuildingActivity::class.java)
+                                startActivity(intent)
                             }
 
 
@@ -64,7 +70,7 @@ class Login : AppCompatActivity(), AnkoLogger {
                     }
 
                     else{
-                        intent = Intent(this, AddBuilding::class.java)
+                        intent = Intent(this, BuildingActivity::class.java)
                         startActivity(intent)
                     }
 
@@ -74,5 +80,54 @@ class Login : AppCompatActivity(), AnkoLogger {
             }
 
         }
+    }
+
+    fun signUp(view:View){
+
+        auth.createUserWithEmailAndPassword(email.text.toString(), password.text.toString()).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                firestore = app.buildings
+                if(firestore!=null){
+                    firestore!!.fetchBuildings {
+                        destFirestore = app.destinations
+                        if(destFirestore!=null){
+                            destFirestore!!.fetchDestinations {
+                                if(email.text.toString()=="obrienemma0@gmail.com"){
+                                    intent = Intent(this, AdminHome::class.java)
+                                    startActivity(intent)
+                                }
+                                else{
+
+                                    intent = Intent(this, BuildingActivity::class.java)
+                                    startActivity(intent)
+                                }
+                            }
+                        }
+                    }
+                }
+                else{
+                    intent = Intent(this, BuildingActivity::class.java)
+                    startActivity(intent)
+                }
+                toast("SignIn Success:")
+                var userId = FirebaseAuth.getInstance().currentUser!!.uid
+                var userEmail = encodeUserEmail(FirebaseAuth.getInstance().currentUser!!.email!!)
+                info{"!!!  Email" + userEmail}
+                var db = FirebaseDatabase.getInstance().reference
+
+                val key = db.child("users").child(userEmail).push().key
+                db.child("users").child(userEmail).push().setValue("Buildings") //create folder
+                db.child("users").child(userEmail).push().setValue("Destination") //create folder
+
+            } else {
+                toast("Sign Up Failed: ${task.exception?.message}")
+            }
+        }
+
+
+    }
+
+    fun encodeUserEmail(userEmail: String): String {
+        return userEmail.replace(".", ",")
     }
 }
