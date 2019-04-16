@@ -7,23 +7,30 @@ import android.view.MenuItem
 import com.google.firebase.auth.FirebaseAuth
 import org.jetbrains.anko.AnkoLogger
 import wit.org.guidancesystem.activities.Login
+import wit.org.guidancesystem.main.MainApp
+import wit.org.guidancesystem.models.RoomModel
 
 open class Base: AnkoLogger, AppCompatActivity() {
+
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item?.itemId){
             R.id.item_logout -> {
-                FirebaseAuth.getInstance().signOut()
-                intent = Intent(this, Login::class.java)
-                startActivity(intent)
+                logout()
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
+    fun logout(){
+        FirebaseAuth.getInstance().signOut()
+        intent = Intent(this, Login::class.java)
+        startActivity(intent)
+    }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.main_menu, menu)
+
         return true
 
     }
