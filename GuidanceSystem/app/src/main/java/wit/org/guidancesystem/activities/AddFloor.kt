@@ -65,7 +65,7 @@ class AddFloor : AppCompatActivity(), AnkoLogger{
         val floorName = EditText(this)
 
         AlertDialog.Builder(this).setTitle("Add Floor")
-            .setMessage("Please confirm that your layout can be saved")
+            .setMessage("Enter a name for the building")
             .setView(floorName)
             .setPositiveButton("OK"){dialog, which ->
 
