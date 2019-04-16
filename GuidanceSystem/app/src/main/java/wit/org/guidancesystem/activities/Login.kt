@@ -125,7 +125,7 @@ class Login : AppCompatActivity(), AnkoLogger {
 
                 //val key = db.child("users").child(userEmail).push().key
                 db.child("users").child(userEmail).child("Buildings").child("test").push().setValue(BuildingModel("test")) //create folder
-                db.child("users").child(userEmail).child("Destination").push().setValue(Metre()) //create folder
+                db.child("users").child(userEmail).child("Destination").child("test").push().setValue(Metre()) //create folder
 
             } else {
                 toast("Sign Up Failed: ${task.exception?.message}")

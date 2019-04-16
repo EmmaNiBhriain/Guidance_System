@@ -92,8 +92,9 @@ class DestinationMenu : AppCompatActivity(), AnkoLogger {
             roomView.room_square.setOnClickListener {
                 info{"!!Room selected is " + room.name}
 
-                var userId = FirebaseAuth.getInstance().currentUser!!.uid
-                val ref = FirebaseDatabase.getInstance().getReference("users").child(userId).child("Destination")
+                var userEmail = FirebaseAuth.getInstance().currentUser!!.email
+                userEmail = encodeEmail(userEmail!!)
+                val ref = FirebaseDatabase.getInstance().getReference("users").child(userEmail!!).child("Destination")
 
                 val destinationid = ref.push().key
                 val destination = room
@@ -102,9 +103,22 @@ class DestinationMenu : AppCompatActivity(), AnkoLogger {
                     Toast.makeText(context, "Destination saved successfully", Toast.LENGTH_LONG).show()
                 }
 
+                val testData = ref.child("test")
+
+                if(testData != null){
+                    testData.removeValue()
+                }
+                else{
+                    //do nothing
+                }
+
             }
 
             return roomView
+        }
+
+        fun encodeEmail(userEmail: String): String {
+            return userEmail.replace(".", ",")
         }
 
 
