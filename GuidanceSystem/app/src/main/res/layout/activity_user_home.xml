@@ -5,7 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activities.AdminHome">
+        tools:context=".activities.UserHome">
 
     <android.support.design.widget.AppBarLayout
             android:layout_height="wrap_content"
@@ -17,10 +17,10 @@
     <Button android:id="@+id/ShowRooms"
             android:layout_width="280dp"
             android:layout_height="91dp"
-            android:text="@string/add_building"
+            android:text="Show Buildings"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="32dp" android:layout_marginTop="28dp"
-            android:onClick="addBuilding" android:layout_marginEnd="8dp"
+            android:onClick="showBuildings" android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
             android:textColor="@android:color/white"
@@ -53,5 +53,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginTop="12dp"
             app:layout_constraintTop_toBottomOf="@+id/viewStats" app:layout_constraintVertical_bias="0.418"/>
+
 
 </android.support.constraint.ConstraintLayout>

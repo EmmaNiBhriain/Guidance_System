@@ -63,13 +63,13 @@ class Login : AppCompatActivity(), AnkoLogger {
                                         startActivity(intent)
                                     }
                                     else{
-                                        intent = Intent(this, BuildingActivity::class.java)
+                                        intent = Intent(this, UserHome::class.java)
                                         startActivity(intent)
                                     }
                                 }
                             }
                             else{
-                                intent = Intent(this, BuildingActivity::class.java)
+                                intent = Intent(this, UserHome::class.java)
                                 startActivity(intent)
                             }
 
@@ -78,7 +78,7 @@ class Login : AppCompatActivity(), AnkoLogger {
                     }
 
                     else{
-                        intent = Intent(this, BuildingActivity::class.java)
+                        intent = Intent(this, UserHome::class.java)
                         startActivity(intent)
                     }
 
