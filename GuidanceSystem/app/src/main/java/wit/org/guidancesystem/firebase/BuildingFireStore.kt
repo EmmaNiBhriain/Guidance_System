@@ -27,7 +27,7 @@ class BuildingFireStore(val context: Context):AnkoLogger {
 
     fun create(targetEmail:String, building:BuildingModel){
         //var emailId = decodeUserEmail(targetEmail)
-        val key = db.child("users").child(targetEmail).child("Buildings").push().key
+        val key = db.child("users").child(targetEmail).key
         building.id = key!!
         buildings.add(building)
 
