@@ -28,6 +28,8 @@ class AddFloor : AppCompatActivity(), AnkoLogger{
 
     var metres = ArrayList<Metre>()
     lateinit var app: MainApp
+    var validBuilding = true
+    var invalidRooms = ""
 
     var adapter:FloorAdapter?= null
 
@@ -60,36 +62,68 @@ class AddFloor : AppCompatActivity(), AnkoLogger{
         return super.onOptionsItemSelected(item)
     }
 
+    private fun checkRooms(){
+        //If a door is missing a bluetooth id or a name, display a prompt and the co ordinates
+        for( i in metres){
+            if(((i.type == AreaType.DOOR)&&(i.bluetoothId == ""))|| ((i.type == AreaType.DOOR)&&(i.name == ""))){
+                info { "!!! Missing info " + i.xCoOrd + " " + i.yCoOrd}
+                invalidRooms = invalidRooms + i.xCoOrd + ", " + i.yCoOrd + "\n"
+
+                validBuilding = false
+            }
+        }
+    }
+
 
     private fun menu_confirm(){
         val floorName = EditText(this)
 
-        AlertDialog.Builder(this).setTitle("Add Floor")
-            .setMessage("Enter a name for the building")
-            .setView(floorName)
-            .setPositiveButton("OK"){dialog, which ->
-
-                var nameOfFloor = floorName.getText().toString();
-
-                if(nameOfFloor != ""){
 
 
-                    var building = BuildingModel()
-                    building.name = nameOfFloor
-                    building.rooms = metres
-                    app.buildings.create(app.targetUserEmail, building)
+        checkRooms()
 
-                    app.users.clear()
-                    app.targetUserEmail = "" //reset targetUserEmail
-                    intent = Intent(this, AdminHome::class.java)
-                    startActivity(intent)
+        if(validBuilding){
+            AlertDialog.Builder(this).setTitle("Add Floor")
+                .setMessage("Enter a name for the building")
+                .setView(floorName)
+                .setPositiveButton("OK"){dialog, which ->
+
+                    var nameOfFloor = floorName.getText().toString();
+
+                    if(nameOfFloor != ""){
+
+
+                        var building = BuildingModel()
+                        building.name = nameOfFloor
+                        building.rooms = metres
+                        app.buildings.create(app.targetUserEmail, building)
+
+                        app.users.clear()
+                        app.targetUserEmail = "" //reset targetUserEmail
+                        intent = Intent(this, AdminHome::class.java)
+                        startActivity(intent)
+                    }
+                    else{
+                        Toast.makeText(applicationContext, "Please enter a valid name", Toast.LENGTH_SHORT).show()
+                    }
+
                 }
-                else{
-                    Toast.makeText(applicationContext, "Please enter a valid name", Toast.LENGTH_SHORT).show()
-                }
+                .show()
+        }
+        else{
 
-            }
-            .show()
+
+
+            AlertDialog.Builder(this).setTitle("Missing Information")
+                .setMessage("Please make sure you have entered a name and bluetooth id for the rooms at coordinates \n" + invalidRooms)
+                .setPositiveButton("OK"){dialog, which ->
+                    invalidRooms = ""
+                }
+                .show()
+
+        }
+
+
     }
 
     private fun populateGrid(){
