@@ -62,13 +62,13 @@ class AdminHome : Base() {
     }
 
     fun viewStats(view:View){
-        intent = Intent(this, Stats::class.java)
-        startActivity(intent)
+        //intent = Intent(this, Stats::class.java)
+        //startActivity(intent)
     }
 
     fun viewRoomStats(view:View){
-        intent = Intent(this, RoomGraph::class.java)
-        startActivity(intent)
+        //intent = Intent(this, RoomGraph::class.java)
+        //startActivity(intent)
     }
 
     override fun onBackPressed() {

@@ -4,10 +4,9 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import wit.org.guidancesystem.BuildingActivity
-import wit.org.guidancesystem.R
+import wit.org.guidancesystem.*
 
-class UserHome : AppCompatActivity() {
+class UserHome : Base() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,10 +19,12 @@ class UserHome : AppCompatActivity() {
     }
 
     fun viewStats(view:View){
-
+        intent = Intent(this, Stats::class.java)
+        startActivity(intent)
     }
 
     fun viewRoomStats(view: View){
-
+        intent = Intent(this, RoomGraph::class.java)
+        startActivity(intent)
     }
 }

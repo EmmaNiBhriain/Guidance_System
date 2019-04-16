@@ -20,7 +20,7 @@ import wit.org.guidancesystem.models.Metre
 import java.util.*
 
 
-class Stats : AppCompatActivity(), AnkoLogger {
+class Stats : Base(), AnkoLogger {
 
     lateinit var app: MainApp
 
