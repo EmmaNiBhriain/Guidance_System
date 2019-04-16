@@ -1,21 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.constraint.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".BuildingActivity">
+        tools:context=".activities.AdminHome" tools:layout_editor_absoluteY="81dp">
+
+    <android.support.design.widget.AppBarLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+    </android.support.design.widget.AppBarLayout>
 
     <GridView
-            android:id = "@+id/floorLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:id="@+id/floorLayout"
+            android:layout_width="365dp"
+            android:layout_height="436dp"
             android:horizontalSpacing="2dp"
             android:verticalSpacing="2dp"
             android:numColumns="10"
-    >
+            android:layout_marginBottom="24dp"
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" app:layout_constraintHorizontal_bias="0.666" android:layout_marginTop="4dp"
+            app:layout_constraintTop_toBottomOf="@+id/roomLabel">
 
     </GridView>
+    <TextView
+            android:text="Room"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/roomLabel"
+            app:layout_constraintEnd_toStartOf="@+id/imageView6"
+            android:layout_marginEnd="8dp" app:layout_constraintTop_toTopOf="@+id/imageView6"
+    />
+    <TextView
+            android:text="Wall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/wallLabel"
+            app:layout_constraintEnd_toStartOf="@+id/doorColour"
+            android:layout_marginEnd="8dp" app:layout_constraintTop_toTopOf="@+id/doorColour"
+    />
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" app:srcCompat="@drawable/circle_room"
+            android:id="@+id/roomColour"
+            app:layout_constraintEnd_toStartOf="@+id/roomLabel"
+            app:layout_constraintTop_toTopOf="@+id/roomLabel"/>
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" app:srcCompat="@drawable/circle_door"
+            android:id="@+id/doorColour"
+            app:layout_constraintEnd_toStartOf="@+id/doorLabel"
+            android:layout_marginEnd="1dp" app:layout_constraintTop_toTopOf="@+id/doorLabel"
+    />
+    <TextView
+            android:text="Door"
+            android:layout_width="wrap_content"
+            android:layout_height="15dp"
+            android:id="@+id/doorLabel"
+            app:layout_constraintEnd_toStartOf="@+id/roomColour"
+            android:layout_marginEnd="8dp" app:layout_constraintTop_toTopOf="@+id/roomColour"
+    />
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" app:srcCompat="@drawable/circle_corridor"
+            android:id="@+id/corridorColour"
+            app:layout_constraintEnd_toStartOf="@+id/corridorLabel"
+            android:layout_marginEnd="1dp" app:layout_constraintTop_toTopOf="@+id/corridorLabel"
+    />
+    <TextView
+            android:text="Corridor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/corridorLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp" tools:layout_editor_absoluteY="3dp"/>
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" app:srcCompat="@drawable/circle_danger"
+            android:id="@+id/imageView6"
+            app:layout_constraintEnd_toStartOf="@+id/dangerLabel"
+            android:layout_marginEnd="1dp" app:layout_constraintTop_toTopOf="@+id/dangerLabel"
+    />
+    <TextView
+            android:text="Danger"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dangerLabel"
+            app:layout_constraintEnd_toStartOf="@+id/corridorColour" android:layout_marginEnd="8dp"
+            app:layout_constraintTop_toTopOf="@+id/corridorColour"/>
 
-</LinearLayout>
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" app:srcCompat="@drawable/circle_wall"
+            android:id="@+id/wallColour"
+            app:layout_constraintEnd_toStartOf="@+id/wallLabel" android:layout_marginEnd="1dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            app:layout_constraintTop_toTopOf="@+id/wallLabel"/>
+
+</android.support.constraint.ConstraintLayout>

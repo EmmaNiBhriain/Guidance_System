@@ -18,4 +18,6 @@
     <string name="title_activity_room_graph">RoomGraph</string>
     <string name="view_room_stats">View Room Stats</string>
     <string name="title_activity_list_users">ListUsers</string>
+    <string name="room">Room</string>
+    <string name="legend">Legend</string>
 </resources>

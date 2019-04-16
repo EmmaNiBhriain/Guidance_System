@@ -41,32 +41,25 @@ class AddFloor : AppCompatActivity(), AnkoLogger{
         floorLayout.adapter = adapter
         app = application as MainApp
 
-
-
-       // floorLayout.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, i, l ->
-         //   val item = (view.findViewById(R.id.metreSquare) as TextView).text.toString()
-        //};
-
-
-
     }
 
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.add_floor_menu, menu)
         return true
+
     }
+
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item?.itemId){
             R.id.item_confirm ->{
                 menu_confirm()
-
             }
         }
         return super.onOptionsItemSelected(item)
     }
+
 
     private fun menu_confirm(){
         val floorName = EditText(this)
