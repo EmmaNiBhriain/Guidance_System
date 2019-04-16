@@ -48,6 +48,8 @@ class AddFloor : AppCompatActivity(), AnkoLogger{
 
         }
 
+        floorLayout.numColumns =length
+
         populateGrid()
 
         adapter = FloorAdapter(this, metres)
@@ -138,8 +140,8 @@ class AddFloor : AppCompatActivity(), AnkoLogger{
     }
 
     private fun populateGrid(){
-        for (i in 10 downTo 1){
-            for(j in 1..10){
+        for (i in width downTo 1){
+            for(j in 1..length){
                 var new = Metre(AreaType.CORRIDOR, "", j, i)
                 metres.add(new)
             }
