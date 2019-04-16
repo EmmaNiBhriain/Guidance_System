@@ -41,9 +41,11 @@ class AddFloor : AppCompatActivity(), AnkoLogger{
 
         if(intent.hasExtra("width")){
             width = Integer.parseInt(intent.extras.getString("width"))
+            width = validateDimension(width)
             info{"Width " + width}
 
             length = Integer.parseInt(intent.extras.getString("length"))
+            length = validateDimension(length)
             info{"length " + length}
 
         }
@@ -56,6 +58,18 @@ class AddFloor : AppCompatActivity(), AnkoLogger{
         floorLayout.adapter = adapter
         app = application as MainApp
 
+    }
+
+    private fun validateDimension(value:Int):Int{
+        if(value>100){
+            return 100
+        }
+        else if(value < 1){
+            return 1
+        }
+        else{
+            return value
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
