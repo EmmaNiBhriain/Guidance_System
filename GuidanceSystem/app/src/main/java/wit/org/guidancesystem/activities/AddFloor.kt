@@ -105,8 +105,6 @@ class AddFloor : AppCompatActivity(), AnkoLogger{
     private fun menu_confirm(){
         val floorName = EditText(this)
 
-
-
         checkRooms()
 
         if(validBuilding){
@@ -145,6 +143,7 @@ class AddFloor : AppCompatActivity(), AnkoLogger{
                 .setMessage("Please make sure you have entered a name and bluetooth id for the rooms at coordinates \n" + invalidRooms)
                 .setPositiveButton("OK"){dialog, which ->
                     invalidRooms = ""
+                    validBuilding = true
                 }
                 .show()
 

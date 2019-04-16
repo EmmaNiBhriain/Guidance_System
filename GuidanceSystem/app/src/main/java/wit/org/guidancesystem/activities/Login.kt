@@ -17,6 +17,8 @@ import wit.org.guidancesystem.Stats
 import wit.org.guidancesystem.firebase.BuildingFireStore
 import wit.org.guidancesystem.firebase.DestinationFireStore
 import wit.org.guidancesystem.main.MainApp
+import wit.org.guidancesystem.models.BuildingModel
+import wit.org.guidancesystem.models.Metre
 import wit.org.guidancesystem.models.RoomModel
 
 class Login : AppCompatActivity(), AnkoLogger {
@@ -36,6 +38,7 @@ class Login : AppCompatActivity(), AnkoLogger {
 
         app.users.clear()
         app.rooms.clear()
+        app.buildings.clear()
 
     }
 
@@ -121,8 +124,8 @@ class Login : AppCompatActivity(), AnkoLogger {
                 var db = FirebaseDatabase.getInstance().reference
 
                 //val key = db.child("users").child(userEmail).push().key
-                db.child("users").child(userEmail).push().setValue("Buildings") //create folder
-                db.child("users").child(userEmail).push().setValue("Destination") //create folder
+                db.child("users").child(userEmail).child("Buildings").child("test").push().setValue(BuildingModel("test")) //create folder
+                db.child("users").child(userEmail).child("Destination").push().setValue(Metre()) //create folder
 
             } else {
                 toast("Sign Up Failed: ${task.exception?.message}")

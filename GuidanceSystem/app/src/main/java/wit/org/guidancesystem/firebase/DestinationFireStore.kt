@@ -36,7 +36,7 @@ class DestinationFireStore (val context: Context): AnkoLogger {
         db = FirebaseDatabase.getInstance().reference
         userEmail = encodeUserEmail(FirebaseAuth.getInstance().currentUser!!.email!!)
         destinations.clear()
-        db.child("users").child("EMCJUDYRJKZlouOnzjGVfxpQTWR2").child("Destination").addListenerForSingleValueEvent(valueEventListener)
+        db.child("users").child(userEmail).child("Destination").addListenerForSingleValueEvent(valueEventListener)
     }
 
     fun encodeUserEmail(userEmail: String): String {
