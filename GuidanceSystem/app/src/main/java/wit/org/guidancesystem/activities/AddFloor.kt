@@ -30,12 +30,23 @@ class AddFloor : AppCompatActivity(), AnkoLogger{
     lateinit var app: MainApp
     var validBuilding = true
     var invalidRooms = ""
+    var width = 0
+    var length = 0
 
     var adapter:FloorAdapter?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.add_floor)
+
+        if(intent.hasExtra("width")){
+            width = Integer.parseInt(intent.extras.getString("width"))
+            info{"Width " + width}
+
+            length = Integer.parseInt(intent.extras.getString("length"))
+            info{"length " + length}
+
+        }
 
         populateGrid()
 

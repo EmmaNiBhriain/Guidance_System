@@ -69,7 +69,9 @@ class ListUsers : AppCompatActivity(),AnkoLogger, UserListener {
 
                 info { "!!! " + width }
 
-                intent = Intent(this, AddFloor::class.java)
+                intent = Intent(this, AddFloor::class.java).putExtra("width", width)
+                intent.putExtra("length", length)
+
                 startActivity(intent)
 
             }
