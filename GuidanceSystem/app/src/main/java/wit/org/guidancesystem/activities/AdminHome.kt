@@ -70,4 +70,7 @@ class AdminHome : Base() {
         intent = Intent(this, RoomGraph::class.java)
         startActivity(intent)
     }
+
+    override fun onBackPressed() {
+    }//do nothing
 }

@@ -17,6 +17,7 @@ import wit.org.guidancesystem.Stats
 import wit.org.guidancesystem.firebase.BuildingFireStore
 import wit.org.guidancesystem.firebase.DestinationFireStore
 import wit.org.guidancesystem.main.MainApp
+import wit.org.guidancesystem.models.RoomModel
 
 class Login : AppCompatActivity(), AnkoLogger {
 
@@ -31,6 +32,10 @@ class Login : AppCompatActivity(), AnkoLogger {
         app = application as MainApp
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login)
+
+
+        app.users.clear()
+        app.rooms.clear()
 
     }
 
@@ -115,7 +120,7 @@ class Login : AppCompatActivity(), AnkoLogger {
                 info{"!!!  Email" + userEmail}
                 var db = FirebaseDatabase.getInstance().reference
 
-                val key = db.child("users").child(userEmail).push().key
+                //val key = db.child("users").child(userEmail).push().key
                 db.child("users").child(userEmail).push().setValue("Buildings") //create folder
                 db.child("users").child(userEmail).push().setValue("Destination") //create folder
 

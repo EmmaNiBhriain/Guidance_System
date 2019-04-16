@@ -14,7 +14,7 @@ class MainApp : Application(), AnkoLogger {
     lateinit var destinations:DestinationFireStore
     var users = ArrayList<String>()
     var targetUserEmail = ""
-    val rooms = ArrayList<RoomModel>()
+    var rooms = ArrayList<RoomModel>()
 
     override fun onCreate() {
         super.onCreate()
