@@ -97,6 +97,7 @@ class DestinationMenu : AppCompatActivity(), AnkoLogger {
                 val ref = FirebaseDatabase.getInstance().getReference("users").child(userEmail!!).child("Destination")
 
                 val destinationid = ref.push().key
+                room.fbId = destinationid!!
                 val destination = room
 
                 ref.child(destinationid!!).setValue(destination).addOnCompleteListener{
