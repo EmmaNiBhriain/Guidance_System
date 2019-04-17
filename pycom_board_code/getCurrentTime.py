@@ -3,6 +3,7 @@
 #################################################
 
 from network import WLAN
+import machine
 from machine import RTC
 import sys
 import utime
@@ -38,7 +39,13 @@ def setRTCLocalTime():
         print("Waiting for NTP server...")
     print('\nTime after sync: ', rtc.now())
 
+#wifiConnect()
+#setRTCLocalTime()
 
 utime.timezone(3600) #set the time zone to gmt+1
-print('Adjusted to GMT +1 timezone', utime.localtime(), '\n')
-#setRTCLocalTime()
+localtime = utime.localtime()
+print('Adjusted to GMT +1 timezone', localtime, '\n')
+todayDate = str(localtime[2]) + "/" + str(localtime[1]) + "/" + str(localtime[0])
+nowTime = str(localtime[3]) + ":" + str(localtime[4])
+print(todayDate)
+print(nowTime)
