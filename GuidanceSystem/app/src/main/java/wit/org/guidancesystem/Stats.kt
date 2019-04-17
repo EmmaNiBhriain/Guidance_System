@@ -22,14 +22,20 @@ import wit.org.guidancesystem.main.MainApp
 import wit.org.guidancesystem.models.Metre
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
+import android.R.attr.keySet
+import org.jetbrains.anko.toast
 
 
 class Stats : Base(), AnkoLogger {
 
     lateinit var app: MainApp
     var customFormat = SimpleDateFormat("dd MMMM yyyy", Locale.ENGLISH)
+    var irishDateFormat = SimpleDateFormat("d/M/yyyy", Locale.ENGLISH)
 
     var selectedDate = Calendar.getInstance()
+    var dateMap = HashMap<String, ArrayList<Metre>>()
+    var frequency = HashMap<Metre, Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -40,16 +46,40 @@ class Stats : Base(), AnkoLogger {
         app = application as MainApp
         info{"!!! " + app.destinations.findAll().size}
 
-        //frequency in a week TODO limit it to a week
-        var frequency = HashMap<Metre, Int>()
+
 
         for (m in app.destinations.findAll()){
+
             if(m.visited ){
-                var current = frequency.get(m)
-                frequency.put(m, if (current == null) 1 else current!! + 1);
+
+                if(dateMap.containsKey(m.date)){ //if the date is already a key, add m to the arraylist of that key
+                    var rooms = dateMap.get(m.date)
+                    rooms!!.add(m)
+                    dateMap[m.date] = rooms
+                }
+                else{ //if the date is not already used, add it to the hashmap
+                    var rooms = ArrayList<Metre>()
+                    rooms.add(m)
+                    dateMap[m.date] = rooms
+                }
+
             }
         }
 
+        for (date in dateMap.keys) {
+            val key = date
+            val value = dateMap.get(date).toString()
+            println("!!!" + key + " " + value)
+        }
+
+
+        createGraph()
+
+
+
+    }
+
+    fun createGraph(){
         var points = ArrayList<DataPoint>()
 
         points.add(DataPoint(0.0,0.0))
@@ -65,7 +95,6 @@ class Stats : Base(), AnkoLogger {
             info{"Element " + ent.key + " occurs " + ent.value + " times"}
 
         }
-
         val arrayOfPoints = arrayOfNulls<DataPoint>(points.size)
         points.toArray(arrayOfPoints)
 
@@ -119,7 +148,6 @@ class Stats : Base(), AnkoLogger {
         series.valuesOnTopColor = Color.RED
     }
 
-
     fun showCalendar(view: View){
         val now = Calendar.getInstance()
         info{"!!!Date picker launching"}
@@ -132,10 +160,29 @@ class Stats : Base(), AnkoLogger {
                 val date = customFormat.format(selectedDate.time)
                 Toast.makeText(this, "date: " + date, Toast.LENGTH_SHORT).show()
                 dateLabel.setText(customFormat.format(selectedDate.time))
+                updateGraph(irishDateFormat.format(selectedDate.time))
 
             }, now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH)
         )
         datePickerDialog.show()
+    }
+
+    //for each room in this date, get the frequency visited
+    fun updateGraph(date:String){
+        if(dateMap.containsKey(date)){
+            var visitedRooms = dateMap.get(date)
+
+            for( r in visitedRooms!!){
+                var current = frequency.get(r)
+                frequency.put(r, if (current == null) 1 else current!! + 1);
+            }
+
+            createGraph()
+
+        }
+        else{
+            Toast.makeText(this, "No rooms are recorded for this date" + date, Toast.LENGTH_SHORT).show()
+        }
     }
 
 }
