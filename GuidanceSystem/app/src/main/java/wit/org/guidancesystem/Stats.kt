@@ -1,9 +1,12 @@
 package wit.org.guidancesystem
 
+import android.app.DatePickerDialog
 import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity;
+import android.view.View
+import android.widget.Toast
 
 import kotlinx.android.synthetic.main.activity_stats.*
 import com.jjoe64.graphview.series.LineGraphSeries
@@ -17,12 +20,16 @@ import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import wit.org.guidancesystem.main.MainApp
 import wit.org.guidancesystem.models.Metre
+import java.text.SimpleDateFormat
 import java.util.*
 
 
 class Stats : Base(), AnkoLogger {
 
     lateinit var app: MainApp
+    var customFormat = SimpleDateFormat("dd MMMM yyyy", Locale.ENGLISH)
+
+    var selectedDate = Calendar.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -110,6 +117,25 @@ class Stats : Base(), AnkoLogger {
 // draw values on top
         series.isDrawValuesOnTop = false
         series.valuesOnTopColor = Color.RED
+    }
+
+
+    fun showCalendar(view: View){
+        val now = Calendar.getInstance()
+        info{"!!!Date picker launching"}
+        val datePickerDialog = DatePickerDialog(this,
+            DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
+                //val selectedDate = Calendar.getInstance()
+                selectedDate.set(Calendar.YEAR, year)
+                selectedDate.set(Calendar.MONTH, month)
+                selectedDate.set(Calendar.DAY_OF_MONTH, day)
+                val date = customFormat.format(selectedDate.time)
+                Toast.makeText(this, "date: " + date, Toast.LENGTH_SHORT).show()
+                dateLabel.setText(customFormat.format(selectedDate.time))
+
+            }, now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH)
+        )
+        datePickerDialog.show()
     }
 
 }
