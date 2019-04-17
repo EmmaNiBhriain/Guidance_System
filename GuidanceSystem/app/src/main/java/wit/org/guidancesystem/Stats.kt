@@ -74,12 +74,15 @@ class Stats : Base(), AnkoLogger {
 
 
         createGraph()
+        updateGraph(irishDateFormat.format(selectedDate.time))
 
 
 
     }
 
     fun createGraph(){
+        dateLabel.setText(customFormat.format(selectedDate.time))
+
         var points = ArrayList<DataPoint>()
 
         points.add(DataPoint(0.0,0.0))
@@ -159,7 +162,7 @@ class Stats : Base(), AnkoLogger {
                 selectedDate.set(Calendar.DAY_OF_MONTH, day)
                 val date = customFormat.format(selectedDate.time)
                 Toast.makeText(this, "date: " + date, Toast.LENGTH_SHORT).show()
-                dateLabel.setText(customFormat.format(selectedDate.time))
+                //dateLabel.setText(customFormat.format(selectedDate.time))
                 updateGraph(irishDateFormat.format(selectedDate.time))
 
             }, now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH)
