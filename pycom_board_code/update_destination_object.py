@@ -33,9 +33,11 @@ def updateFirebase():
         print(destination)
         value = next(iter(destination.values())) #most recent destination object
         print(value)
-        fbID =  next(iter(value.values())) #bluetooth Id of most recent destination object
+        fbID =  value["fbId"]#next(iter(value.values())) #bluetooth Id of most recent destination object
         print(fbID)
-        destination = firebase.patch(URL+'/users/007eob@gmail,com/Destination/' + fbID, {"visited": True, "date":todayDate, "time":nowTime})
+        path = URL+'/users/007eob@gmail,com/Destination/' + fbID
+        print(path)
+        destination = firebase.patch(path, {"visited": True, "date":todayDate, "time":nowTime})
     except:
         print("Not connected to WiFI, reconnecting now")
         wifiConnect()
