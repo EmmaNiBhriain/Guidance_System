@@ -18,8 +18,8 @@ def wifiConnect():
             wlan.connect(net.ssid, auth=(net.sec, 'emmastestdemo'), timeout=5000)
             while not wlan.isconnected():
                 machine.idle() # save power while waiting
-                print('WLAN connection succeeded!')
-                break
+            print('WLAN connection succeeded!')
+            break
             else:
                 print("Network not found")
 
@@ -39,8 +39,8 @@ def setRTCLocalTime():
         print("Waiting for NTP server...")
     print('\nTime after sync: ', rtc.now())
 
-#wifiConnect()
-#setRTCLocalTime()
+wifiConnect()
+setRTCLocalTime()
 
 utime.timezone(3600) #set the time zone to gmt+1
 localtime = utime.localtime()
