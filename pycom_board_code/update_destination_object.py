@@ -1,6 +1,7 @@
 import ufirebase as firebase
 from network import WLAN
 import machine
+import utime
 
 
 def wifiConnect():
@@ -18,6 +19,12 @@ def wifiConnect():
         else:
             print("Network not found")
 
+utime.timezone(3600) #set the time zone to gmt+1
+localtime = utime.localtime()
+todayDate = str(localtime[2]) + "/" + str(localtime[1]) + "/" + str(localtime[0])
+nowTime = str(localtime[3]) + ":" + str(localtime[4])
+print(todayDate)
+print(nowTime)
 
 def updateFirebase():
     try:
@@ -28,7 +35,7 @@ def updateFirebase():
         print(value)
         fbID =  next(iter(value.values())) #bluetooth Id of most recent destination object
         print(fbID)
-        destination = firebase.patch(URL+'/users/007eob@gmail,com/Destination/' + fbID, {"visited": True})
+        destination = firebase.patch(URL+'/users/007eob@gmail,com/Destination/' + fbID, {"visited": True, "date":todayDate, "time":nowTime})
     except:
         print("Not connected to WiFI, reconnecting now")
         wifiConnect()
