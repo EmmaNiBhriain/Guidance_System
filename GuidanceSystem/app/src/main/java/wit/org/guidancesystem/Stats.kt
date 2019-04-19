@@ -35,7 +35,7 @@ class Stats : Base(), AnkoLogger {
 
     var selectedDate = Calendar.getInstance()
     var dateMap = HashMap<String, ArrayList<Metre>>()
-    var frequency = HashMap<Metre, Int>()
+    var frequency = HashMap<String, Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -104,6 +104,8 @@ class Stats : Base(), AnkoLogger {
         info { "!!! points" + arrayOfPoints.size }
 
         val graph = findViewById(R.id.usagegraph) as GraphView
+
+        graph.removeAllSeries()
         val series =  BarGraphSeries<DataPoint>(arrayOfPoints);
         graph.addSeries(series);
 
@@ -115,7 +117,7 @@ class Stats : Base(), AnkoLogger {
         labels.add("")
 
         for (pair in frequency){
-            labels.add(pair.key.name)
+            labels.add(pair.key)
         }
         labels.add("")
 
@@ -131,6 +133,7 @@ class Stats : Base(), AnkoLogger {
         //Set the ranges of the axes
         graph.getViewport().setMinX(0.0);
         graph.getViewport().setMinY(0.0);
+        graph.getViewport().setMaxY(12.0);
 
         info{"!!!! Max y " + graph.getViewport().getMaxY(true)}
         graph.getViewport().setYAxisBoundsManual(true);
@@ -172,12 +175,13 @@ class Stats : Base(), AnkoLogger {
 
     //for each room in this date, get the frequency visited
     fun updateGraph(date:String){
+        frequency = HashMap<String, Int>()
         if(dateMap.containsKey(date)){
             var visitedRooms = dateMap.get(date)
 
             for( r in visitedRooms!!){
-                var current = frequency.get(r)
-                frequency.put(r, if (current == null) 1 else current!! + 1);
+                var current = frequency.get(r.name)
+                frequency.put(r.name, if (current == null) 1 else current!! + 1);
             }
 
             createGraph()
