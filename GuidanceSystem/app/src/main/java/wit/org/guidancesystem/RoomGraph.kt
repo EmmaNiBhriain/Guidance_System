@@ -48,7 +48,10 @@ class RoomGraph : Base(), AdapterView.OnItemSelectedListener {
 
         //Get the list of rooms that the user has visited
         for (d in app.destinations.findAll())
-            list_of_items.add(d.name)
+            if(!list_of_items.contains(d.name)){
+                list_of_items.add(d.name)
+            }
+
 
 
         //mapDateToVisit()
