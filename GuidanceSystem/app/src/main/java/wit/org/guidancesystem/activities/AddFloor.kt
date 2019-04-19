@@ -193,6 +193,24 @@ class AddFloor : AppCompatActivity(), AnkoLogger{
 
             var metreSquare = floorView.findViewById(R.id.metreSquare) as Button
 
+            if(metre.type == AreaType.CORRIDOR){ //make it a wall
+                metreSquare.setBackgroundResource(R.color.colorCorridor)
+            }
+            else if(metre.type == AreaType.WALL){ //make it a door
+                metreSquare.setBackgroundResource(R.color.colorWall)
+            }
+            else if(metre.type == AreaType.DOOR){ //make it a room
+                metreSquare.setBackgroundResource(R.color.colorDoor)
+            }
+            else if(metre.type == AreaType.ROOM){ //make it a danger area
+                metreSquare.setBackgroundResource(R.color.colorRoom)
+            }
+            else{
+                metreSquare.setBackgroundResource(R.color.colorDanger)
+            }
+
+
+
             metreSquare.setOnClickListener {
                 if(metre.type == AreaType.CORRIDOR){ //make it a wall
                     metreSquare.setBackgroundResource(R.color.colorWall)
