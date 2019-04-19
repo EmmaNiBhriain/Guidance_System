@@ -17,6 +17,7 @@ import com.jjoe64.graphview.helper.StaticLabelsFormatter
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
 import org.jetbrains.anko.info
+import wit.org.guidancesystem.firebase.DestinationFireStore
 import wit.org.guidancesystem.main.MainApp
 import wit.org.guidancesystem.models.Metre
 import java.text.SimpleDateFormat
@@ -27,6 +28,8 @@ class RoomGraph : Base(), AdapterView.OnItemSelectedListener {
 
     lateinit var app:MainApp
     var irishDateFormat = SimpleDateFormat("d/M/yyyy", Locale.ENGLISH)
+
+    var destFirestore: DestinationFireStore?=null
 
     var dateMap = HashMap<String, ArrayList<Metre>>()
     var frequency = HashMap<Metre, Int>()
@@ -89,6 +92,7 @@ class RoomGraph : Base(), AdapterView.OnItemSelectedListener {
         //Set the ranges of the axes
         graph.getViewport().setMinX(0.0);
         graph.getViewport().setMinY(0.0);
+        graph.getViewport().setMaxY(20.0);
 
         graph.getViewport().setYAxisBoundsManual(true);
 
@@ -159,23 +163,27 @@ class RoomGraph : Base(), AdapterView.OnItemSelectedListener {
 
         weeklyData = arrayOf(DataPoint(0.0,0.0),DataPoint(1.0,0.0),DataPoint(2.0,0.0),DataPoint(3.0,0.0),DataPoint(4.0,0.0),DataPoint(5.0,0.0),DataPoint(5.0,0.0));
 
-        dateMap = HashMap<String, ArrayList<Metre>>()
-        // use position to know the selected item
-        nameOfRoom = adapter.getItemAtPosition(position).toString()
-        info{"!!!" + nameOfRoom}
+        destFirestore = app.destinations
+        destFirestore!!.fetchDestinations {
+            dateMap = HashMap<String, ArrayList<Metre>>()
+            // use position to know the selected item
+            nameOfRoom = adapter.getItemAtPosition(position).toString()
+            info{"!!!" + nameOfRoom}
 
-        mapDateToVisit()
+            mapDateToVisit()
 
-        for (i in dateMap){
-            info {"!!! room for each date" + i.value.get(0).name }
+            for (i in dateMap){
+                info {"!!! room for each date" + i.value.get(0).name }
+            }
+
+            //get the date for the last 7 days
+            generateGraphPoints()
+
+            info { "!!! points generated"  }
+
+            createGraph()
         }
 
-        //get the date for the last 7 days
-        generateGraphPoints()
-
-        info { "!!! points generated"  }
-
-        createGraph()
     }
 
     override fun onNothingSelected(arg0: AdapterView<*>) {
