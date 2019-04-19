@@ -10,8 +10,19 @@ import org.junit.Assert.*
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 class ExampleUnitTest {
+
+    private val roomGraph = RoomGraph()
+
     @Test
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
     }
+
+    @Test
+    fun testGetDate(){
+        val pastDate = roomGraph.getDate(4)
+        assertEquals("14/4/2019", pastDate)
+    }
+
+
 }
