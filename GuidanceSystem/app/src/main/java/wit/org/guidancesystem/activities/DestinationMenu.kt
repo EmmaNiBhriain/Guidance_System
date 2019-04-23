@@ -1,6 +1,7 @@
 package wit.org.guidancesystem.activities
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AlertDialog
@@ -30,6 +31,7 @@ class DestinationMenu : AppCompatActivity(), AnkoLogger {
     lateinit var app: MainApp
 
     var adapter:DestinationAdapter?= null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +65,9 @@ class DestinationMenu : AppCompatActivity(), AnkoLogger {
     class DestinationAdapter: BaseAdapter, AnkoLogger {
         var roomList = ArrayList<Metre>()
 
+        var displayColours = arrayOf("#f70707", "#f79707", "#f3f707", "#07f732", "#07d3f7", "#b307f7")
+
+
         var context: Context? = null
         constructor(context: Context, roomList: ArrayList<Metre>):super(){
             this.context = context
@@ -79,12 +84,27 @@ class DestinationMenu : AppCompatActivity(), AnkoLogger {
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
             val room = this.roomList[position]
+            info{"!!!" + position}
 
             var inflator = context!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             var roomView = inflator.inflate(R.layout.room_item, null);
 
 
             //var roomItem = roomView.findViewById(R.id.room_square) as TextView
+            if(position<6){
+                var hexCol = displayColours[position]
+
+                info { "!!! colour " + hexCol }
+                roomView.setBackgroundColor(Color.parseColor(hexCol))
+            }
+            else{
+                var newPos = position % 6
+                while(newPos>5){
+                    newPos = newPos % 6
+                }
+                roomView.setBackgroundColor(Color.parseColor(displayColours[newPos]))
+            }
+
 
             roomView.room_square.text = room.name
             info{"!!!Room name " + room.name}
@@ -121,10 +141,6 @@ class DestinationMenu : AppCompatActivity(), AnkoLogger {
         fun encodeEmail(userEmail: String): String {
             return userEmail.replace(".", ",")
         }
-
-
-
-
 
         override fun getItemId(position: Int): Long {
             return position.toLong()
