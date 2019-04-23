@@ -1,18 +1,58 @@
 from machine import Pin
 import time
-# initialize GP17 in gpio mode and make it an input with the # pull-up enabled
+from mqtt import MQTTClient
+from network import WLAN
+import machine
+
+global location
+
+########################################
+#       Connect to WiFi            #####
+########################################
+
+wlan = WLAN(mode=WLAN.STA)
+
+nets = wlan.scan()
+print(nets)
+for net in nets:
+    if net.ssid == 'VMCAD4B64':
+        print('Network found!')
+        wlan.connect(net.ssid, auth=(net.sec, 'Xdcr7zrm2Jsx'), timeout=5000)
+        while not wlan.isconnected():
+            machine.idle() # save power while waiting
+        print('WLAN connection succeeded!')
+        break
+    else:
+        print("Network not found")
+
+
+########################################
+#       set up mqtt client          #####
+########################################
+
+client = MQTTClient("Pycom", "io.adafruit.com",user="EmmaNiBhriain", password="e99caf87d89749f28926c88d7170137c", port=1883)
+client.connect()
+location = "kitchen"
+
+
+########################################
+# Initialise button on expansion board #
+########################################
 
 Pin.exp_board.G17
 p_in = Pin(Pin.exp_board.G17, mode=Pin.IN, pull = Pin.PULL_UP)
 Pin.exp_board.G17.id()
 
-#p_in = Pin('GP17', mode=Pin.IN, pull=Pin.PULL_UP)
-
-p_in()
-
+########################################
+#    Check if the button is pressed    #
+#    Trigger email if button pressed   #
+########################################
 while True:
     if p_in() == 0:
         print("Button pressed", p_in())
-        time.sleep(1)
+        client.publish(topic="EmmaNiBhriain/feeds/indoor_location", msg=location)
+        client.check_msg()
+        print("location published :", location )
+        time.sleep(3)
     else:
         pass
