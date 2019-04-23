@@ -43,6 +43,7 @@ def readDestination():
     except:
         print("Cannot read from firebase, reconnecting to wifi")
         wifiConnect()
+        time.sleep(3)
         readDestination()
     value = next(iter(destination.values())) #most recent destination object
     print(value)
@@ -60,32 +61,33 @@ def checkId():
     if beaconId!="" :
         if str.encode(beaconId) in dangerAreas: dangerAreas.remove(str.encode(beaconId))
         bluetooth = Bluetooth()
-        bluetooth.start_scan(20)
+        bluetooth.start_scan(60)
         while bluetooth.isscanning():
             adv = bluetooth.get_adv()
             if adv:
                 # try to get the complete name
                 #print(bluetooth.resolve_adv_data(adv.data, Bluetooth.ADV_NAME_CMPL))
 
-                mfg_data = adv.mac #bluetooth.resolve_adv_data(adv.data, Bluetooth.ADV_MANUFACTURER_DATA)
+                if(adv.rssi > -63):
+                    mfg_data = adv.mac #bluetooth.resolve_adv_data(adv.data, Bluetooth.ADV_MANUFACTURER_DATA)
 
-                if mfg_data:
-                    # try to get the manufacturer data (Apple's iBeacon data is sent here)
-                    #print(ubinascii.hexlify(mfg_data))
-                    if(ubinascii.hexlify(bluetooth.resolve_adv_data(adv.data, Bluetooth.ADV_MANUFACTURER_DATA)) == str.encode(beaconId)):
-                        print("you have arrived")
-                        time.sleep(10)
-                        break
-                    else:
-                        if ubinascii.hexlify(bluetooth.resolve_adv_data(adv.data, Bluetooth.ADV_MANUFACTURER_DATA)) in dangerAreas:
-                            #p_out.value(1)
-                            #time.sleep(2)
-                            #p_out.value(0)
-                            #time.sleep(2)#vibrate disk motor
-                            print("Danger Zone",ubinascii.hexlify(adv.mac))
-                            print("Data of danger zone device", ubinascii.hexlify(bluetooth.resolve_adv_data(adv.data, Bluetooth.ADV_MANUFACTURER_DATA)))
+                    if mfg_data:
+                        # try to get the manufacturer data (Apple's iBeacon data is sent here)
+                        #print(ubinascii.hexlify(mfg_data))
+                        if(ubinascii.hexlify(bluetooth.resolve_adv_data(adv.data, Bluetooth.ADV_MANUFACTURER_DATA)) == str.encode(beaconId)):
+                            print("you have arrived", adv.rssi)
+                            break
                         else:
-                            print("Mac address of bluetooth device",ubinascii.hexlify(adv.mac))
+                            if ubinascii.hexlify(bluetooth.resolve_adv_data(adv.data, Bluetooth.ADV_MANUFACTURER_DATA)) in dangerAreas:
+                                p_out.value(1)
+                                time.sleep(2)
+                                p_out.value(0)
+                                time.sleep(3)
+                                print("Data of danger device", ubinascii.hexlify(bluetooth.resolve_adv_data(adv.data, Bluetooth.ADV_MANUFACTURER_DATA)), " strength ", adv.rssi)
+                            else:
+                                print("Data of device", ubinascii.hexlify(bluetooth.resolve_adv_data(adv.data, Bluetooth.ADV_MANUFACTURER_DATA)), " strength ", adv.rssi)
+                else:
+                    continue
     else:
         print("No beaconId")
 
@@ -93,8 +95,8 @@ def checkId():
 #beaconId = value["bluetoothId"]
 #print(beaconId)
 
-dangerAreas = [str.encode("590002150112233445566778899aabbccddeeff03c6a79d1bb"), str.encode("fe0cdd907caa"), str.encode("e9823c6a79d1"), str.encode("f12b88072c42"), str.encode("0734226743c5"), str.encode("42cdb5309d8e")]
-beaconId = ""
-wifiConnect()
-beaconId = readDestination()
+dangerAreas = [str.encode("590002150112233445566778899aabbccddeeff03c6a79d1bb"), str.encode("590002150112233445566778899aabbccddeeff088072c42bb"), str.encode("590002150112233445566778899aabbccddeeff0dd907caabb")]
+beaconId = "590002150112233445566778899aabbccddeeff03c6a79d1bb"
+#wifiConnect()
+#beaconId = readDestination()
 checkId()

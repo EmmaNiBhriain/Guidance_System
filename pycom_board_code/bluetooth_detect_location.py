@@ -1,6 +1,7 @@
 import ubinascii
 import time
 from network import Bluetooth
+ids = []
 bluetooth = Bluetooth()
 bluetooth.start_scan(20)
 while bluetooth.isscanning():
@@ -14,8 +15,11 @@ while bluetooth.isscanning():
         if mfg_data:
             # try to get the manufacturer data (Apple's iBeacon data is sent here)
             #print(ubinascii.hexlify(mfg_data))
-            if(ubinascii.hexlify(mfg_data) == str.encode("0600010920020c3244807035e647af85fb0ed5b7eda5d114f2374d65b0")):
-                print("you have arrived")
-                time.sleep(10)
+            if(ubinascii.hexlify(mfg_data) == str.encode("590002150112233445566778899aabbccddeeff0dd907baabb")):
+                print("you have arrived",ubinascii.hexlify(mfg_data))
+                break
+                #time.sleep(10)
             else:
-                print(ubinascii.hexlify(mfg_data))
+                if ubinascii.hexlify(mfg_data) not in ids:
+                    ids.append(ubinascii.hexlify(mfg_data))
+                    print(ubinascii.hexlify(mfg_data), " strength ", adv.rssi)
