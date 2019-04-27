@@ -5,6 +5,8 @@ from network import Bluetooth
 from machine import Pin
 from network import WLAN
 import machine
+from mqtt import MQTTClient
+
 
 # initialize `P9` in gpio mode and make it an output
 Pin.exp_board.G9
@@ -92,11 +94,45 @@ def checkId():
         print("No beaconId")
 
 
+def timerResponse(alarm):
+    global seconds
+    seconds += 1
+    if(seconds == 10):
+        print("Time's up")
+        alarm.cancel() #end timer after 10 seconds
+    else:
+        print("seconds ", seconds)
+
+def setupClient():
+    global client
+    client = MQTTClient("Pycom", "io.adafruit.com",user="EmmaNiBhriain", password="e99caf87d89749f28926c88d7170137c", port=1883)
+    client.connect()
+    global location
+    location = "kitchen"
+
+def publishLocation():
+    client.publish(topic="EmmaNiBhriain/feeds/indoor_location", msg=location)
+    client.check_msg()
+    print("location published :", location )
+
+def handleTimer(alarm):
+    global seconds
+    seconds += 1
+    if(seconds == 10):
+        print("Time's up")
+        publishLocation()
+        alarm.cancel() #end timer after 10 seconds
+    else:
+        print("seconds ", seconds)
+
 #beaconId = value["bluetoothId"]
 #print(beaconId)
 
-dangerAreas = [str.encode("590002150112233445566778899aabbccddeeff03c6a79d1bb"), str.encode("590002150112233445566778899aabbccddeeff088072c42bb"), str.encode("590002150112233445566778899aabbccddeeff0dd907caabb")]
-beaconId = "590002150112233445566778899aabbccddeeff03c6a79d1bb"
-#wifiConnect()
+#dangerAreas = [str.encode("590002150112233445566778899aabbccddeeff03c6a79d1bb"), str.encode("590002150112233445566778899aabbccddeeff088072c42bb"), str.encode("590002150112233445566778899aabbccddeeff0dd907caabb")]
+#beaconId = ""
+wifiConnect()
 #beaconId = readDestination()
-checkId()
+#checkId()
+setupClient()
+seconds = 0
+tim = machine.Timer.Alarm(handler= handleTimer, s=1, periodic=True)
