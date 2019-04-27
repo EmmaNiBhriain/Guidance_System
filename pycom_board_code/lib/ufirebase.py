@@ -2,7 +2,6 @@
 
 from usseclient import SSEClient
 import urequests as requests
-
 import ujson as json
 import _thread as thread
 import usocket as socket
@@ -12,7 +11,7 @@ class ClosableSSEClient(SSEClient):
     def __init__(self, *args, **kwargs):
         self.should_connect = True
         super(ClosableSSEClient, self).__init__(*args, **kwargs)
-    
+
     def _connect(self):
         if self.should_connect:
             super(ClosableSSEClient, self)._connect()
@@ -36,7 +35,7 @@ class RemoteThread():
         self.URL = URL
         self.parent = parent
         super(RemoteThread, self).__init__()
-    
+
     def run(self):
         try:
             self.sse = ClosableSSEClient(self.URL)
@@ -55,7 +54,7 @@ class RemoteThread():
 
 def start(self, run):
     thread.start_new_thread(run)
-    
+
     def stop(self):
         thread.exit()
 
@@ -94,10 +93,10 @@ class subscriber:
     def __init__(self, URL, function):
         self.cache = {}
         self.remote_thread = RemoteThread(self, firebaseURL(URL), function)
-    
+
     def start(self):
         self.remote_thread.start()
-    
+
     def stop(self):
         self.remote_thread.stop()
 

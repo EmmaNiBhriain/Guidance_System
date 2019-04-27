@@ -23,3 +23,4 @@ while bluetooth.isscanning():
                 if ubinascii.hexlify(mfg_data) not in ids:
                     ids.append(ubinascii.hexlify(mfg_data))
                     print(ubinascii.hexlify(mfg_data), " strength ", adv.rssi)
+±Á(ù€7
