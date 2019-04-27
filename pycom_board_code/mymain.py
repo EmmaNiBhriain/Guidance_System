@@ -6,6 +6,9 @@ from machine import Pin
 from network import WLAN
 import machine
 from mqtt import MQTTClient
+from machine import RTC
+import sys
+import utime
 
 ########################################
 #       Initialize Pin 9 as output    #
@@ -93,6 +96,7 @@ def checkId():
                         print(tempIdValue)
                         if(tempIdValue == str.encode(beaconId)):
                             print("you have arrived", adv.rssi)
+
                             break
                         else:
                             if ubinascii.hexlify(bluetooth.resolve_adv_data(adv.data, Bluetooth.ADV_MANUFACTURER_DATA)) in dangerAreas:
@@ -158,12 +162,49 @@ def handleTimer(alarm):
     else:
         print("seconds ", seconds)
 
-print(beaconId)
+
+def setRTCLocalTime():
+    rtc = RTC()
+    print("Time before sync: ", rtc.now())
+    rtc.ntp_sync("pool.ntp.org")
+    while not rtc.synced():
+        utime.sleep(1)
+        print("Waiting for NTP server...")
+    print('\nTime after sync: ', rtc.now())
+
+
+def updateFirebase():
+    try:
+        URL = 'guidancesystem-f0136'  #name of database
+        destination = firebase.get(URL+'/users/007eob@gmail,com/Destination')
+        print(destination)
+        value = next(iter(destination.values())) #most recent destination object
+        print(value)
+        fbID =  value["fbId"]#next(iter(value.values())) #bluetooth Id of most recent destination object
+        print(fbID)
+        path = URL+'/users/007eob@gmail,com/Destination/' + fbID
+        print(path)
+        destination = firebase.patch(path, {"visited": True, "date":todayDate, "time":nowTime})
+    except:
+        print("Not connected to WiFI, reconnecting now")
+        wifiConnect()
+        print("Retrying write to firebase")
+        updateFirebase()
+
+#print(beaconId)
 global locations
 locations = ["starting position"]
 dangerAreas = {str.encode("590002150112233445566778899aabbccddeeff03c6a79d1bb"): "kitchen", str.encode("590002150112233445566778899aabbccddeeff088072c42bb"):"bathroom", str.encode("590002150112233445566778899aabbccddeeff0dd907caabb"):"living room"}
 #beaconId = "590002150112233445566778899aabbccddeeff03c6a79d1bb" #test value
 wifiConnect()
+setRTCLocalTime()
+
+utime.timezone(3600) #set the time zone to gmt+1
+localtime = utime.localtime()
+print('Adjusted to GMT +1 timezone', localtime, '\n')
+todayDate = str(localtime[2]) + "/" + str(localtime[1]) + "/" + str(localtime[0])
+nowTime = str(localtime[3]) + ":" + str(localtime[4])
+
 beaconId = readDestination()
 setupClient()
 seconds = 0

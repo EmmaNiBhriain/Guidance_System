@@ -2,7 +2,9 @@ from machine import Pin
 import time
 
 
-# initialize `P9` in gpio mode and make it an output
+###############################################
+# Toggle the vibrating disk motor on and off  #
+###############################################
 Pin.exp_board.G9
 p_out = Pin(Pin.exp_board.G9, mode=Pin.OUT)
 Pin.exp_board.G9.id()
