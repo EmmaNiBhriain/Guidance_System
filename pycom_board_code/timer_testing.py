@@ -13,7 +13,3 @@ def timerResponse(alarm):
 
 seconds = 0
 tim = machine.Timer.Alarm(handler= timerResponse, s=1, periodic=True)
-
-#while(True):
-#    print(0)
-#print(tim)
