@@ -1,22 +1,18 @@
-package wit.org.guidancesystem
+package wit.org.guidancesystem.activities
 
 import android.graphics.Color
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity;
 
 import kotlinx.android.synthetic.main.activity_room_graph.*
-import android.graphics.DashPathEffect
-import android.graphics.Paint
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import com.jjoe64.graphview.series.PointsGraphSeries
 import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.helper.StaticLabelsFormatter
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
 import org.jetbrains.anko.info
+import wit.org.guidancesystem.R
 import wit.org.guidancesystem.firebase.DestinationFireStore
 import wit.org.guidancesystem.main.MainApp
 import wit.org.guidancesystem.models.Metre

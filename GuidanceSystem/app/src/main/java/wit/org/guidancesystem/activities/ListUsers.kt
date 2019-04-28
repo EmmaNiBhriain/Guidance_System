@@ -22,6 +22,9 @@ import wit.org.guidancesystem.R
 import wit.org.guidancesystem.main.MainApp
 import wit.org.guidancesystem.models.BuildingModel
 
+/**
+ * Display a list of all users
+ */
 class ListUsers : AppCompatActivity(),AnkoLogger, UserListener {
 
     lateinit var app:MainApp
@@ -40,7 +43,10 @@ class ListUsers : AppCompatActivity(),AnkoLogger, UserListener {
     }
 
 
-
+    /**
+     * When a user is selected, display a dialog box for the dimensions of a building to be added to.
+     * Navigate to the AddFloor activity passing the width and length as a Bundle
+     */
     override fun onUserClick(user: String) {
         app.targetUserEmail = user
 

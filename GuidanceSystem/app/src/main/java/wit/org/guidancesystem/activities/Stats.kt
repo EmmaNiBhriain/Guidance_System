@@ -1,40 +1,37 @@
-package wit.org.guidancesystem
+package wit.org.guidancesystem.activities
 
 import android.app.DatePickerDialog
 import android.graphics.Color
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity;
 import android.view.View
 import android.widget.Toast
 
 import kotlinx.android.synthetic.main.activity_stats.*
-import com.jjoe64.graphview.series.LineGraphSeries
 import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.BarGraphSeries
 import com.jjoe64.graphview.series.DataPoint
-import com.jjoe64.graphview.ValueDependentColor
-import com.jjoe64.graphview.DefaultLabelFormatter
 import com.jjoe64.graphview.helper.StaticLabelsFormatter
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
+import wit.org.guidancesystem.R
 import wit.org.guidancesystem.main.MainApp
 import wit.org.guidancesystem.models.Metre
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-import android.R.attr.keySet
-import org.jetbrains.anko.toast
 
+/**
+ * Display barcharts of where a user has been on a particular day
+ */
 
 class Stats : Base(), AnkoLogger {
 
     lateinit var app: MainApp
-    var customFormat = SimpleDateFormat("dd MMMM yyyy", Locale.ENGLISH)
-    var irishDateFormat = SimpleDateFormat("d/M/yyyy", Locale.ENGLISH)
+    var customFormat = SimpleDateFormat("dd MMMM yyyy", Locale.ENGLISH) //format for label display
+    var irishDateFormat = SimpleDateFormat("d/M/yyyy", Locale.ENGLISH) //format for use in database
 
-    var selectedDate = Calendar.getInstance()
-    var dateMap = HashMap<String, ArrayList<Metre>>()
+    var selectedDate = Calendar.getInstance() //date chosen in the calendar object
+    var dateMap = HashMap<String, ArrayList<Metre>>() //hashmap with a date as a key and all rooms visited on that day as a value
     var frequency = HashMap<String, Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,12 +43,9 @@ class Stats : Base(), AnkoLogger {
         app = application as MainApp
         info{"!!! " + app.destinations.findAll().size}
 
-
-
+        //populate datemap
         for (m in app.destinations.findAll()){
-
             if(m.visited ){
-
                 if(dateMap.containsKey(m.date)){ //if the date is already a key, add m to the arraylist of that key
                     var rooms = dateMap.get(m.date)
                     rooms!!.add(m)
@@ -62,7 +56,6 @@ class Stats : Base(), AnkoLogger {
                     rooms.add(m)
                     dateMap[m.date] = rooms
                 }
-
             }
         }
 
@@ -72,14 +65,14 @@ class Stats : Base(), AnkoLogger {
             println("!!!" + key + " " + value)
         }
 
-
         createGraph()
         updateGraph(irishDateFormat.format(selectedDate.time))
-
-
-
     }
 
+    /**
+     * Read date selected and get the rooms visited on that day
+     * Create datapoints using the rooms and frequency visited
+     */
     fun createGraph(){
         dateLabel.setText(customFormat.format(selectedDate.time))
 
@@ -149,23 +142,22 @@ class Stats : Base(), AnkoLogger {
 
         series.spacing = 50
 
-// draw values on top
         series.isDrawValuesOnTop = false
-        series.valuesOnTopColor = Color.RED
     }
 
+    /**
+     * Display the calenday
+     */
     fun showCalendar(view: View){
         val now = Calendar.getInstance()
         info{"!!!Date picker launching"}
         val datePickerDialog = DatePickerDialog(this,
             DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
-                //val selectedDate = Calendar.getInstance()
                 selectedDate.set(Calendar.YEAR, year)
                 selectedDate.set(Calendar.MONTH, month)
                 selectedDate.set(Calendar.DAY_OF_MONTH, day)
                 val date = customFormat.format(selectedDate.time)
                 Toast.makeText(this, "date: " + date, Toast.LENGTH_SHORT).show()
-                //dateLabel.setText(customFormat.format(selectedDate.time))
                 updateGraph(irishDateFormat.format(selectedDate.time))
 
             }, now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH)

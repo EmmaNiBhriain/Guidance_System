@@ -10,7 +10,6 @@ import kotlinx.android.synthetic.main.login.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import org.jetbrains.anko.toast
-import wit.org.guidancesystem.BuildingActivity
 import wit.org.guidancesystem.R
 import wit.org.guidancesystem.firebase.BuildingFireStore
 import wit.org.guidancesystem.firebase.DestinationFireStore
@@ -18,6 +17,9 @@ import wit.org.guidancesystem.main.MainApp
 import wit.org.guidancesystem.models.BuildingModel
 import wit.org.guidancesystem.models.Metre
 
+/**
+ * Log a user in or register a new user
+ */
 class Login : AppCompatActivity(), AnkoLogger {
 
     var auth: FirebaseAuth = FirebaseAuth.getInstance()
@@ -32,11 +34,9 @@ class Login : AppCompatActivity(), AnkoLogger {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login)
 
-
         app.users.clear()
         app.rooms.clear()
         app.buildings.clear()
-
     }
 
     fun logIn(view: View){
@@ -103,7 +103,7 @@ class Login : AppCompatActivity(), AnkoLogger {
                                 }
                                 else{
 
-                                    intent = Intent(this, BuildingActivity::class.java)
+                                    intent = Intent(this, UserHome::class.java)
                                     startActivity(intent)
                                 }
                             }
@@ -111,10 +111,10 @@ class Login : AppCompatActivity(), AnkoLogger {
                     }
                 }
                 else{
-                    intent = Intent(this, BuildingActivity::class.java)
-                    startActivity(intent)
+                    //intent = Intent(this, BuildingList::class.java)
+                    //startActivity(intent)
                 }
-                toast("SignIn Success:")
+                toast("Sign Up Success")
                 var userId = FirebaseAuth.getInstance().currentUser!!.uid
                 var userEmail = encodeUserEmail(FirebaseAuth.getInstance().currentUser!!.email!!)
                 info{"!!!  Email" + userEmail}
@@ -132,7 +132,7 @@ class Login : AppCompatActivity(), AnkoLogger {
 
     }
 
-    fun encodeUserEmail(userEmail: String): String {
+    private fun encodeUserEmail(userEmail: String): String {
         return userEmail.replace(".", ",")
     }
 }

@@ -3,6 +3,7 @@ package wit.org.guidancesystem
 import org.junit.Test
 
 import org.junit.Assert.*
+import wit.org.guidancesystem.activities.RoomGraph
 
 /**
  * Unit test for testing the RoomGraph Class

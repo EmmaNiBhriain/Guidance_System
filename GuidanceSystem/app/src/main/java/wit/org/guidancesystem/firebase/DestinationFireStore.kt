@@ -8,6 +8,9 @@ import org.jetbrains.anko.info
 import wit.org.guidancesystem.models.BuildingModel
 import wit.org.guidancesystem.models.Metre
 
+/**
+ * Control communication with Destinations stored in Firebase Realtime Database
+ */
 class DestinationFireStore (val context: Context): AnkoLogger {
 
     val destinations = ArrayList<Metre>()

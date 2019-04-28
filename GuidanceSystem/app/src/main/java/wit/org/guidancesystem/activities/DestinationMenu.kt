@@ -23,6 +23,9 @@ import wit.org.guidancesystem.models.AreaType
 import wit.org.guidancesystem.models.BuildingModel
 import wit.org.guidancesystem.models.Metre
 
+/**
+ * Display list of rooms a user can go to.
+ */
 class DestinationMenu : AppCompatActivity(), AnkoLogger {
 
     var rooms = ArrayList<Metre>()
@@ -56,8 +59,6 @@ class DestinationMenu : AppCompatActivity(), AnkoLogger {
 
         adapter = DestinationAdapter(this, rooms)
         availableRooms.adapter = adapter
-
-
     }
 
 
@@ -65,7 +66,7 @@ class DestinationMenu : AppCompatActivity(), AnkoLogger {
     class DestinationAdapter: BaseAdapter, AnkoLogger {
         var roomList = ArrayList<Metre>()
 
-        var displayColours = arrayOf("#f70707", "#f79707", "#f3f707", "#07f732", "#07d3f7", "#b307f7")
+        var displayColours = arrayOf("#f70707", "#f79707", "#f3f707", "#07f732", "#07d3f7", "#b307f7") //colours for destination buttons
 
 
         var context: Context? = null
@@ -90,7 +91,7 @@ class DestinationMenu : AppCompatActivity(), AnkoLogger {
             var roomView = inflator.inflate(R.layout.room_item, null);
 
 
-            //var roomItem = roomView.findViewById(R.id.room_square) as TextView
+            //set colours of destination buttons
             if(position<6){
                 var hexCol = displayColours[position]
 
@@ -109,6 +110,7 @@ class DestinationMenu : AppCompatActivity(), AnkoLogger {
             roomView.room_square.text = room.name
             info{"!!!Room name " + room.name}
 
+            //when a room is selected, write it to the Destination folder in firebase
             roomView.room_square.setOnClickListener {
                 info{"!!Room selected is " + room.name}
 

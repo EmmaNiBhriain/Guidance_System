@@ -8,6 +8,9 @@ import org.jetbrains.anko.info
 import wit.org.guidancesystem.models.BuildingModel
 import wit.org.guidancesystem.models.Metre
 
+/**
+ * Control communication with Building objects stored in Firebase Realtime Database
+ */
 class BuildingFireStore(val context: Context):AnkoLogger {
 
     val buildings = ArrayList<BuildingModel>()
@@ -24,10 +27,6 @@ class BuildingFireStore(val context: Context):AnkoLogger {
         return buildings.clear()
     }
 
-    fun findById(id:String):BuildingModel?{
-        val foundBuilding:BuildingModel?= buildings.find{b -> b.id == id}
-        return foundBuilding
-    }
 
     fun create(targetEmail:String, building:BuildingModel){
         //var emailId = decodeUserEmail(targetEmail)

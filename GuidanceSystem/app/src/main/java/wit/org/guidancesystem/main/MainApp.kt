@@ -21,14 +21,6 @@ class MainApp : Application(), AnkoLogger {
         info("App started")
         buildings = BuildingFireStore(applicationContext)
         destinations = DestinationFireStore(applicationContext)
-        //val test1 = arrayListOf<Metre>()
-       // test1.addAll(listOf("room1","room2"))
-        //buildings.add(BuildingModel("12343242", "Home", test1))
-        //uildings.add(BuildingModel("12343242", "Away", test1))
 
-    }
-
-    fun encodeUserEmail(userEmail: String): String {
-        return userEmail.replace(".", ",")
     }
 }

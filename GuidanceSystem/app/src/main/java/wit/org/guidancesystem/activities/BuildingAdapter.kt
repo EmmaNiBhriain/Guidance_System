@@ -1,17 +1,18 @@
-package wit.org.guidancesystem
+package wit.org.guidancesystem.activities
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.card_building.view.*
+import wit.org.guidancesystem.R
 import wit.org.guidancesystem.models.BuildingModel
 
 interface BuildingListener {
     fun onBuildingClick(building: BuildingModel)
 }
 
-class BuildingAdapter constructor(private var buildings:List<BuildingModel>,private val listener:BuildingListener): RecyclerView.Adapter<BuildingAdapter.MainHolder>(){
+class BuildingAdapter constructor(private var buildings:List<BuildingModel>,private val listener: BuildingListener): RecyclerView.Adapter<BuildingAdapter.MainHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
         return MainHolder(
             LayoutInflater.from(parent?.context).inflate(

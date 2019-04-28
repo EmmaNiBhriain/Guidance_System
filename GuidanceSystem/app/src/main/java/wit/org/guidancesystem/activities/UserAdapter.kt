@@ -11,6 +11,9 @@ interface UserListener {
     fun onUserClick(userEmail: String)
 }
 
+/**
+ * Class used for displaying Users in a RecyclerView
+ */
 class UserAdapter constructor(private var users:List<String>,private val listener:UserListener): RecyclerView.Adapter<UserAdapter.MainHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
         return MainHolder(

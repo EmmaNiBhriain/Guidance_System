@@ -1,9 +1,7 @@
 package wit.org.guidancesystem.activities
 
 import android.annotation.SuppressLint
-import android.app.PendingIntent.getActivity
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -13,16 +11,12 @@ import android.widget.*
 import kotlinx.android.synthetic.main.add_floor.*
 import kotlinx.android.synthetic.main.building_square.*
 import wit.org.guidancesystem.R
-import wit.org.guidancesystem.R.color.colorAccent
 import wit.org.guidancesystem.models.AreaType
 import wit.org.guidancesystem.models.Metre
-import java.text.FieldPosition
-import com.google.firebase.database.FirebaseDatabase
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import wit.org.guidancesystem.main.MainApp
 import wit.org.guidancesystem.models.BuildingModel
-import kotlin.math.floor
 
 /**
  * Class to save a layout of a building

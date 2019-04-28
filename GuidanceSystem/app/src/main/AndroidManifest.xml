@@ -21,25 +21,9 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".BuildingActivity"
+                android:name=".activities.BuildingList"
                 android:label="Select"
                 android:launchMode="singleTop">
-        </activity>
-        <activity
-                android:name=".AddBuilding"
-                android:label="@string/title_activity_add_building"
-                android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".BuildingActivity"/>
-        </activity>
-        <activity
-                android:name=".Room"
-                android:label="@string/title_activity_room"
-                android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".BuildingActivity"/>
         </activity>
         <activity android:name=".activities.AdminHome">
         </activity>
@@ -51,12 +35,12 @@
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-                android:name=".Stats"
+                android:name=".activities.Stats"
                 android:label="@string/title_activity_stats"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-                android:name=".RoomGraph"
+                android:name=".activities.RoomGraph"
                 android:label="@string/title_activity_room_graph"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
