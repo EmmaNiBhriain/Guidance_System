@@ -24,42 +24,51 @@ import wit.org.guidancesystem.main.MainApp
 import wit.org.guidancesystem.models.BuildingModel
 import kotlin.math.floor
 
+/**
+ * Class to save a layout of a building
+ */
 class AddFloor : AppCompatActivity(), AnkoLogger{
 
-    var metres = ArrayList<Metre>()
+    var metres = ArrayList<Metre>() //A building is made up of an arraylist of Metre objects, these are stored in this variable
     lateinit var app: MainApp
-    var validBuilding = true
-    var invalidRooms = ""
-    var width = 0
-    var length = 0
+    var validBuilding = true //boolean to check that the building is safe to save (has all required info)
+    var invalidRooms = "" //hold co-ordinates of rooms that do not have all required info
+    var width = 0 //width of building
+    var length = 0 //length of building
 
     var adapter:FloorAdapter?= null
 
+    /**
+     * Display the layout with the dimensions specified in previous activity
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.add_floor)
 
         if(intent.hasExtra("width")){
-            width = Integer.parseInt(intent.extras.getString("width"))
+            width = Integer.parseInt(intent.extras.getString("width")) //retrieve the required width
             width = validateDimension(width)
             info{"Width " + width}
 
-            length = Integer.parseInt(intent.extras.getString("length"))
+            length = Integer.parseInt(intent.extras.getString("length")) //retrieve the required length
             length = validateDimension(length)
             info{"length " + length}
-
         }
 
-        floorLayout.numColumns =length
+        floorLayout.numColumns = length //set the number of columns to be equal to the length
 
-        populateGrid()
+        populateGrid() //add Metre objects to the metres ArrayList based on the length and width
 
-        adapter = FloorAdapter(this, metres)
+        adapter = FloorAdapter(this, metres)  //use the FloorAdapter to display a grid of Metres
         floorLayout.adapter = adapter
         app = application as MainApp
 
     }
 
+    /**
+     * Function to handle dimensions
+     * Maximum dimensions = 100x100
+     */
     private fun validateDimension(value:Int):Int{
         if(value>100){
             return 100
@@ -72,14 +81,19 @@ class AddFloor : AppCompatActivity(), AnkoLogger{
         }
     }
 
+    /**
+     * Display toolbar menu: add_floor_menu
+     */
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.add_floor_menu, menu)
         return true
-
     }
 
 
+    /**
+     * Handle activity in the toolbar menu
+     */
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item?.itemId){
             R.id.item_confirm ->{
@@ -89,8 +103,10 @@ class AddFloor : AppCompatActivity(), AnkoLogger{
         return super.onOptionsItemSelected(item)
     }
 
+    /**
+     * If a door is missing a bluetooth id or a name, display a prompt and the co ordinates
+     */
     private fun checkRooms(){
-        //If a door is missing a bluetooth id or a name, display a prompt and the co ordinates
         for( i in metres){
             if(((i.type == AreaType.DOOR)&&(i.bluetoothId == ""))|| ((i.type == AreaType.DOOR)&&(i.name == ""))){
                 info { "!!! Missing info " + i.xCoOrd + " " + i.yCoOrd}
@@ -102,6 +118,9 @@ class AddFloor : AppCompatActivity(), AnkoLogger{
     }
 
 
+    /**
+     * Prompt the user to enter a name for the building and save to firebase. Display home screen
+     */
     private fun menu_confirm(){
         val floorName = EditText(this)
 
@@ -136,9 +155,6 @@ class AddFloor : AppCompatActivity(), AnkoLogger{
                 .show()
         }
         else{
-
-
-
             AlertDialog.Builder(this).setTitle("Missing Information")
                 .setMessage("Please make sure you have entered a name and bluetooth id for the rooms at coordinates \n" + invalidRooms)
                 .setPositiveButton("OK"){dialog, which ->
@@ -152,6 +168,9 @@ class AddFloor : AppCompatActivity(), AnkoLogger{
 
     }
 
+    /**
+     * Create Metre objects and assign co-ordinates
+     */
     private fun populateGrid(){
         for (i in width downTo 1){
             for(j in 1..length){

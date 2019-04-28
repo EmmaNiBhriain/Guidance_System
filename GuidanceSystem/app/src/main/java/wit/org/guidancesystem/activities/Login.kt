@@ -10,16 +10,13 @@ import kotlinx.android.synthetic.main.login.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import org.jetbrains.anko.toast
-import wit.org.guidancesystem.AddBuilding
 import wit.org.guidancesystem.BuildingActivity
 import wit.org.guidancesystem.R
-import wit.org.guidancesystem.Stats
 import wit.org.guidancesystem.firebase.BuildingFireStore
 import wit.org.guidancesystem.firebase.DestinationFireStore
 import wit.org.guidancesystem.main.MainApp
 import wit.org.guidancesystem.models.BuildingModel
 import wit.org.guidancesystem.models.Metre
-import wit.org.guidancesystem.models.RoomModel
 
 class Login : AppCompatActivity(), AnkoLogger {
 

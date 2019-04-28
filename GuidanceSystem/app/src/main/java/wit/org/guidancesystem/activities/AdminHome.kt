@@ -34,6 +34,11 @@ class AdminHome : Base() {
 
     }
 
+    /**
+     *
+     * Retrieve the e-mail address of every user by retrieving the root parent of each entry in Firebase database
+     *
+     */
     fun getUsers(){
         val ref = FirebaseDatabase.getInstance().getReference("/users")
         ref.addListenerForSingleValueEvent(object:ValueEventListener{
@@ -54,22 +59,15 @@ class AdminHome : Base() {
 
     }
 
+    /**
+     * Display a list of users that can be selected to add a building for.
+     */
     fun addBuilding(view: View){
-//        intent = Intent(this, AddFloor::class.java)
         info{"!!!Size of users " + app.users.size}
         intent = Intent(this, ListUsers::class.java)
         startActivity(intent)
     }
 
-    fun viewStats(view:View){
-        //intent = Intent(this, Stats::class.java)
-        //startActivity(intent)
-    }
-
-    fun viewRoomStats(view:View){
-        //intent = Intent(this, RoomGraph::class.java)
-        //startActivity(intent)
-    }
 
     override fun onBackPressed() {
     }//do nothing

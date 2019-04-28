@@ -55,14 +55,6 @@ class RoomGraph : Base(), AdapterView.OnItemSelectedListener {
                 list_of_items.add(d.name)
             }
 
-
-
-        //mapDateToVisit()
-
-        //get the date for the last 7 days
-        //generateGraphPoints()
-
-
         //set up the spinner to display the list of rooms
         spinner!!.setOnItemSelectedListener(this)
 
@@ -83,8 +75,6 @@ class RoomGraph : Base(), AdapterView.OnItemSelectedListener {
         }
         graph.removeAllSeries()
         graph.addSeries(series)
-        //series.setShape(PointsGraphSeries.Shape.POINT)
-
         series.setColor(Color.rgb(
             140, 70, 168
         ))
@@ -99,12 +89,14 @@ class RoomGraph : Base(), AdapterView.OnItemSelectedListener {
         val staticLabelsFormatter = StaticLabelsFormatter(graph)
         staticLabelsFormatter.setHorizontalLabels(weeklyDates)
         graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
-
         graph.getGridLabelRenderer().setVerticalAxisTitle("Number of Visits");
 
     }
 
 
+    /**
+     * Create data points for the last seven days
+     */
     fun generateGraphPoints(){
         for(i in 0..6){
             var pastDate = getDate(i)
@@ -166,7 +158,7 @@ class RoomGraph : Base(), AdapterView.OnItemSelectedListener {
         destFirestore = app.destinations
         destFirestore!!.fetchDestinations {
             dateMap = HashMap<String, ArrayList<Metre>>()
-            // use position to know the selected item
+            // use position to find the selected item
             nameOfRoom = adapter.getItemAtPosition(position).toString()
             info{"!!!" + nameOfRoom}
 

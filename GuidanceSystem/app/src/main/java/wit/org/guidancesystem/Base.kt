@@ -27,6 +27,7 @@ open class Base: AnkoLogger, AppCompatActivity() {
         intent = Intent(this, Login::class.java)
         startActivity(intent)
     }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.main_menu, menu)
