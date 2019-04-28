@@ -69,7 +69,7 @@ class AddFloor : AppCompatActivity(), AnkoLogger{
      * Function to handle dimensions
      * Maximum dimensions = 100x100
      */
-    private fun validateDimension(value:Int):Int{
+    fun validateDimension(value:Int):Int{
         if(value>100){
             return 100
         }
